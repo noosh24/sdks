@@ -6,16 +6,16 @@ namespace Noosh24\OpenApi\Model;
 
 final class OrderDelivery extends Model
 {
-    public ?string $status = null;
-    public ?DeliveryPlatform $platform = null;
-    public ?string $address = null;
-    public ?string $customerPhone = null;
-    public ?string $courierName = null;
-    public ?string $note = null;
-    public ?string $paymentMethod = null;
-    public ?float $fee = null;
-    public ?float $platformTotal = null;
-    public ?\DateTimeImmutable $acceptedAt = null;
+    public readonly ?string $status;
+    public readonly ?DeliveryPlatform $platform;
+    public readonly ?string $address;
+    public readonly ?string $customerPhone;
+    public readonly ?string $courierName;
+    public readonly ?string $note;
+    public readonly ?string $paymentMethod;
+    public readonly ?float $fee;
+    public readonly ?float $platformTotal;
+    public readonly ?\DateTimeImmutable $acceptedAt;
 
     /**
      * @param array<string, mixed> $data

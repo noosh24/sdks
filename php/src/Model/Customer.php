@@ -6,12 +6,12 @@ namespace Noosh24\OpenApi\Model;
 
 final class Customer extends Model
 {
-    public ?string $id = null;
-    public ?string $name = null;
-    public ?string $phone = null;
-    public ?string $note = null;
-    public ?\DateTimeImmutable $createdAt = null;
-    public ?\DateTimeImmutable $updatedAt = null;
+    public readonly ?string $id;
+    public readonly ?string $name;
+    public readonly ?string $phone;
+    public readonly ?string $note;
+    public readonly ?\DateTimeImmutable $createdAt;
+    public readonly ?\DateTimeImmutable $updatedAt;
 
     /**
      * @param array<string, mixed> $data

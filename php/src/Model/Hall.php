@@ -6,9 +6,9 @@ namespace Noosh24\OpenApi\Model;
 
 final class Hall extends Model
 {
-    public ?string $id = null;
-    public ?string $name = null;
-    public ?int $position = null;
+    public readonly ?string $id;
+    public readonly ?string $name;
+    public readonly ?int $position;
 
     /**
      * @param array<string, mixed> $data

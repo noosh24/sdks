@@ -6,18 +6,18 @@ namespace Noosh24\OpenApi\Model;
 
 final class OrderItem extends Model
 {
-    public ?string $id = null;
-    public ?string $productId = null;
-    public ?string $name = null;
-    public ?int $qty = null;
-    public ?float $price = null;
-    public ?float $listPrice = null;
-    public ?string $modifiers = null;
-    public ?string $note = null;
-    public ?string $status = null;
-    public ?bool $comp = null;
-    public ?string $campaign = null;
-    public ?string $cancelReason = null;
+    public readonly ?string $id;
+    public readonly ?string $productId;
+    public readonly ?string $name;
+    public readonly ?int $qty;
+    public readonly ?float $price;
+    public readonly ?float $listPrice;
+    public readonly ?string $modifiers;
+    public readonly ?string $note;
+    public readonly ?string $status;
+    public readonly ?bool $comp;
+    public readonly ?string $campaign;
+    public readonly ?string $cancelReason;
 
     /**
      * @param array<string, mixed> $data

@@ -31,38 +31,37 @@ final class Client
 
     private const MAX_RETRY_WAIT = 60.0;
 
-    public Menu $menu;
+    public readonly Menu $menu;
 
-    public Reservations $reservations;
+    public readonly Reservations $reservations;
 
-    public Orders $orders;
+    public readonly Orders $orders;
 
-    public Payments $payments;
+    public readonly Payments $payments;
 
-    public Tables $tables;
+    public readonly Tables $tables;
 
-    public Customers $customers;
+    public readonly Customers $customers;
 
-    public Loyalty $loyalty;
+    public readonly Loyalty $loyalty;
 
-    public Stock $stock;
+    public readonly Stock $stock;
 
-    public Reviews $reviews;
+    public readonly Reviews $reviews;
 
-    private string $apiKey;
+    private readonly string $apiKey;
 
-    private string $baseUrl;
+    private readonly string $baseUrl;
 
-    private float $timeout;
+    private readonly float $timeout;
 
-    private int $maxRetries;
+    private readonly int $maxRetries;
 
-    private Transport $transport;
+    private readonly Transport $transport;
 
-    private string $userAgent;
+    private readonly string $userAgent;
 
-    /** @var callable(float): void */
-    private $sleep;
+    private readonly \Closure $sleep;
 
     /**
      * @param array{baseUrl?: string, timeout?: float|int, maxRetries?: int, transport?: Transport, userAgent?: string, sleep?: callable(float): void} $options
@@ -80,9 +79,11 @@ final class Client
         $this->transport = $options['transport'] ?? new CurlTransport();
         $agent = 'noosh24-php/' . self::VERSION . ' php/' . PHP_VERSION;
         $this->userAgent = isset($options['userAgent']) ? $options['userAgent'] . ' ' . $agent : $agent;
-        $this->sleep = $options['sleep'] ?? static function (float $seconds): void {
-            usleep((int) round($seconds * 1000000));
-        };
+        $this->sleep = isset($options['sleep'])
+            ? \Closure::fromCallable($options['sleep'])
+            : static function (float $seconds): void {
+                usleep((int) round($seconds * 1000000));
+            };
 
         $this->menu = new Menu($this);
         $this->reservations = new Reservations($this);
@@ -176,10 +177,7 @@ final class Client
         return implode('&', $parts);
     }
 
-    /**
-     * @return mixed
-     */
-    private static function decode(Response $response)
+    private static function decode(Response $response): mixed
     {
         if ($response->body === '') {
             return null;

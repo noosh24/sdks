@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from typing import Dict, Mapping, Optional, Type
+from collections.abc import Mapping
 
 __all__ = [
     "Noosh24Error",
@@ -48,20 +48,20 @@ class APIError(Noosh24Error):
     def __init__(
         self,
         status: int,
-        code: Optional[str],
+        code: str | None,
         message: str,
-        headers: Optional[Mapping[str, str]] = None,
+        headers: Mapping[str, str] | None = None,
         body: str = "",
     ) -> None:
         super().__init__(message)
         self.status = status
         self.code = code
         self.message = message
-        self.headers: Dict[str, str] = {k.lower(): v for k, v in (headers or {}).items()}
+        self.headers: dict[str, str] = {k.lower(): v for k, v in (headers or {}).items()}
         self.body = body
 
     def __repr__(self) -> str:
-        return "%s(status=%d, code=%r, message=%r)" % (type(self).__name__, self.status, self.code, self.message)
+        return f"{type(self).__name__}(status={self.status}, code={self.code!r}, message={self.message!r})"
 
 
 class ValidationError(APIError):
@@ -138,7 +138,7 @@ class TableTooSmallError(UnprocessableError):
 
 class RateLimitError(APIError):
     @property
-    def retry_after(self) -> Optional[int]:
+    def retry_after(self) -> int | None:
         value = self.headers.get("retry-after")
         if value is None:
             return None
@@ -156,7 +156,7 @@ class TemporarilyUnavailableError(ServerError):
     pass
 
 
-_BY_CODE: Dict[str, Type[APIError]] = {
+_BY_CODE: dict[str, type[APIError]] = {
     "validation_error": ValidationError,
     "no_api_key": NoApiKeyError,
     "invalid_api_key": InvalidApiKeyError,
@@ -175,7 +175,7 @@ _BY_CODE: Dict[str, Type[APIError]] = {
     "temporarily_unavailable": TemporarilyUnavailableError,
 }
 
-_BY_STATUS: Dict[int, Type[APIError]] = {
+_BY_STATUS: dict[int, type[APIError]] = {
     400: ValidationError,
     401: AuthenticationError,
     403: PermissionDeniedError,
@@ -187,7 +187,7 @@ _BY_STATUS: Dict[int, Type[APIError]] = {
 
 
 def error_from_response(status: int, headers: Mapping[str, str], body: str) -> APIError:
-    code: Optional[str] = None
+    code: str | None = None
     message = ""
     try:
         parsed = json.loads(body)
@@ -199,6 +199,6 @@ def error_from_response(status: int, headers: Mapping[str, str], body: str) -> A
         if isinstance(parsed.get("message"), str):
             message = parsed["message"]
     if not message:
-        message = code or "HTTP %d" % status
+        message = code or f"HTTP {status}"
     cls = _BY_CODE.get(code or "") or _BY_STATUS.get(status) or (ServerError if status >= 500 else APIError)
     return cls(status, code, message, headers, body)

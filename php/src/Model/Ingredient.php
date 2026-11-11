@@ -6,21 +6,21 @@ namespace Noosh24\OpenApi\Model;
 
 final class Ingredient extends Model
 {
-    public ?string $id = null;
-    public ?string $name = null;
-    public ?string $unit = null;
-    public ?float $stock = null;
-    public ?float $onOpenBills = null;
-    public ?float $available = null;
-    public ?string $state = null;
-    public ?float $lowStock = null;
-    public ?float $parStock = null;
-    public ?float $costPerUnit = null;
-    public ?float $value = null;
-    public ?bool $prepared = null;
+    public readonly ?string $id;
+    public readonly ?string $name;
+    public readonly ?string $unit;
+    public readonly ?float $stock;
+    public readonly ?float $onOpenBills;
+    public readonly ?float $available;
+    public readonly ?string $state;
+    public readonly ?float $lowStock;
+    public readonly ?float $parStock;
+    public readonly ?float $costPerUnit;
+    public readonly ?float $value;
+    public readonly ?bool $prepared;
     /** @var array<string, float>|null */
-    public ?array $byStore = null;
-    public ?\DateTimeImmutable $updatedAt = null;
+    public readonly ?array $byStore;
+    public readonly ?\DateTimeImmutable $updatedAt;
 
     /**
      * @param array<string, mixed> $data

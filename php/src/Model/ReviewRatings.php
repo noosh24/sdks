@@ -6,11 +6,11 @@ namespace Noosh24\OpenApi\Model;
 
 final class ReviewRatings extends Model
 {
-    public ?float $food = null;
-    public ?float $service = null;
-    public ?float $atmosphere = null;
-    public ?float $cleanliness = null;
-    public ?float $price = null;
+    public readonly ?float $food;
+    public readonly ?float $service;
+    public readonly ?float $atmosphere;
+    public readonly ?float $cleanliness;
+    public readonly ?float $price;
 
     /**
      * @param array<string, mixed> $data

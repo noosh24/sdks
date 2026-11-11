@@ -6,13 +6,13 @@ namespace Noosh24\OpenApi\Model;
 
 final class TableAvailability extends Model
 {
-    public ?\DateTimeImmutable $startsAt = null;
-    public ?\DateTimeImmutable $endsAt = null;
-    public ?int $durationMinutes = null;
-    public ?string $openTime = null;
-    public ?string $closeTime = null;
+    public readonly ?\DateTimeImmutable $startsAt;
+    public readonly ?\DateTimeImmutable $endsAt;
+    public readonly ?int $durationMinutes;
+    public readonly ?string $openTime;
+    public readonly ?string $closeTime;
     /** @var list<AvailableTable>|null */
-    public ?array $tables = null;
+    public readonly ?array $tables;
 
     /**
      * @param array<string, mixed> $data

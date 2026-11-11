@@ -6,11 +6,11 @@ namespace Noosh24\OpenApi\Model;
 
 final class StockStore extends Model
 {
-    public ?string $id = null;
-    public ?string $name = null;
-    public ?bool $isDefault = null;
+    public readonly ?string $id;
+    public readonly ?string $name;
+    public readonly ?bool $isDefault;
     /** @var list<string>|null */
-    public ?array $stations = null;
+    public readonly ?array $stations;
 
     /**
      * @param array<string, mixed> $data

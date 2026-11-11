@@ -6,15 +6,11 @@ namespace Noosh24\OpenApi;
 
 use Noosh24\OpenApi\Model\Reservation;
 
-final class CreateReservationResult
+final readonly class CreateReservationResult
 {
-    public Reservation $reservation;
-
-    public bool $created;
-
-    public function __construct(Reservation $reservation, bool $created)
-    {
-        $this->reservation = $reservation;
-        $this->created = $created;
+    public function __construct(
+        public Reservation $reservation,
+        public bool $created,
+    ) {
     }
 }

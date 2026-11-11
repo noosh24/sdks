@@ -6,22 +6,22 @@ namespace Noosh24\OpenApi\Model;
 
 final class Order extends Model
 {
-    public ?string $id = null;
-    public ?string $number = null;
-    public ?int $dailyNumber = null;
-    public ?string $kind = null;
-    public ?string $orderType = null;
-    public ?string $status = null;
-    public ?string $tableId = null;
-    public ?string $billId = null;
-    public ?string $customerName = null;
-    public ?string $allergyNote = null;
+    public readonly ?string $id;
+    public readonly ?string $number;
+    public readonly ?int $dailyNumber;
+    public readonly ?string $kind;
+    public readonly ?string $orderType;
+    public readonly ?string $status;
+    public readonly ?string $tableId;
+    public readonly ?string $billId;
+    public readonly ?string $customerName;
+    public readonly ?string $allergyNote;
     /** @var list<OrderItem>|null */
-    public ?array $items = null;
-    public ?float $subtotal = null;
-    public ?OrderDelivery $delivery = null;
-    public ?\DateTimeImmutable $createdAt = null;
-    public ?\DateTimeImmutable $updatedAt = null;
+    public readonly ?array $items;
+    public readonly ?float $subtotal;
+    public readonly ?OrderDelivery $delivery;
+    public readonly ?\DateTimeImmutable $createdAt;
+    public readonly ?\DateTimeImmutable $updatedAt;
 
     /**
      * @param array<string, mixed> $data

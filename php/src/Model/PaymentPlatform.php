@@ -6,8 +6,8 @@ namespace Noosh24\OpenApi\Model;
 
 final class PaymentPlatform extends Model
 {
-    public ?string $id = null;
-    public ?string $name = null;
+    public readonly ?string $id;
+    public readonly ?string $name;
 
     /**
      * @param array<string, mixed> $data

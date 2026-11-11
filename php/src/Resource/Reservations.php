@@ -34,10 +34,7 @@ final class Reservations extends Resource
         return $this->fetchOne('/reservations/' . self::id($reservationId), [], [Reservation::class, 'fromArray']);
     }
 
-    /**
-     * @param string|\DateTimeInterface $date
-     */
-    public function availability($date, string $time, ?int $guests = null): TableAvailability
+    public function availability(string|\DateTimeInterface $date, string $time, ?int $guests = null): TableAvailability
     {
         $query = ['date' => self::date($date), 'time' => $time];
         if ($guests !== null) {

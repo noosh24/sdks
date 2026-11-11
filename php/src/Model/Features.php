@@ -6,8 +6,8 @@ namespace Noosh24\OpenApi\Model;
 
 final class Features extends Model
 {
-    public ?bool $loyalty = null;
-    public ?bool $inventory = null;
+    public readonly ?bool $loyalty;
+    public readonly ?bool $inventory;
 
     /**
      * @param array<string, mixed> $data

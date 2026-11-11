@@ -42,11 +42,9 @@ final class CurlTransport implements Transport
         if ($body === false) {
             $message = curl_error($handle);
             $code = curl_errno($handle);
-            curl_close($handle);
             throw new ConnectionException($message !== '' ? $message : 'Request failed', $code);
         }
         $status = (int) curl_getinfo($handle, CURLINFO_RESPONSE_CODE);
-        curl_close($handle);
 
         return new Response($status, $received, (string) $body);
     }

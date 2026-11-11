@@ -6,9 +6,9 @@ namespace Noosh24\OpenApi\Model;
 
 final class PaymentCard extends Model
 {
-    public ?string $maskedPan = null;
-    public ?string $scheme = null;
-    public ?string $bank = null;
+    public readonly ?string $maskedPan;
+    public readonly ?string $scheme;
+    public readonly ?string $bank;
 
     /**
      * @param array<string, mixed> $data

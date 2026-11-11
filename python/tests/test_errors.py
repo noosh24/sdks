@@ -42,7 +42,7 @@ def test_maps_error_codes(make_client, http, status, code, cls, parent):
     assert isinstance(error, n.Noosh24Error)
     assert error.status == status
     assert error.code == code
-    assert error.message == ("HTTP %d" % status if code is None else "Mesaj")
+    assert error.message == (f"HTTP {status}" if code is None else "Mesaj")
 
 
 def test_validation_error_is_not_retried(client, http):

@@ -6,27 +6,27 @@ namespace Noosh24\OpenApi\Model;
 
 final class Reservation extends Model
 {
-    public ?string $id = null;
-    public ?string $code = null;
-    public ?string $status = null;
-    public ?string $source = null;
-    public ?\DateTimeImmutable $startsAt = null;
-    public ?\DateTimeImmutable $endsAt = null;
-    public ?int $guests = null;
-    public ?string $zone = null;
-    public ?ReservationTable $table = null;
-    public ?ReservationGuest $guest = null;
-    public ?string $specialRequest = null;
-    public ?string $allergyNote = null;
-    public ?bool $birthday = null;
-    public ?bool $childChair = null;
-    public ?float $depositPaid = null;
+    public readonly ?string $id;
+    public readonly ?string $code;
+    public readonly ?string $status;
+    public readonly ?string $source;
+    public readonly ?\DateTimeImmutable $startsAt;
+    public readonly ?\DateTimeImmutable $endsAt;
+    public readonly ?int $guests;
+    public readonly ?string $zone;
+    public readonly ?ReservationTable $table;
+    public readonly ?ReservationGuest $guest;
+    public readonly ?string $specialRequest;
+    public readonly ?string $allergyNote;
+    public readonly ?bool $birthday;
+    public readonly ?bool $childChair;
+    public readonly ?float $depositPaid;
     /** @var list<ReservationPreOrderItem>|null */
-    public ?array $preOrder = null;
-    public ?string $externalRef = null;
-    public ?\DateTimeImmutable $decidedAt = null;
-    public ?\DateTimeImmutable $createdAt = null;
-    public ?\DateTimeImmutable $updatedAt = null;
+    public readonly ?array $preOrder;
+    public readonly ?string $externalRef;
+    public readonly ?\DateTimeImmutable $decidedAt;
+    public readonly ?\DateTimeImmutable $createdAt;
+    public readonly ?\DateTimeImmutable $updatedAt;
 
     /**
      * @param array<string, mixed> $data

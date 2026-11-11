@@ -2,7 +2,7 @@
 
 Official Python client for the [Noosh24 Open API](https://developer.noosh24.com): read a venue's menu, reservations, orders, payments, tables, customers, loyalty, stock and reviews, and create or cancel reservations.
 
-- Python 3.8 or newer. One dependency: `httpx`.
+- Python 3.11 or newer (tested on 3.11 to 3.15). One dependency: `httpx`.
 - Typed dataclasses for every response (`py.typed` included).
 - API reference: https://developer.noosh24.com/reference
 

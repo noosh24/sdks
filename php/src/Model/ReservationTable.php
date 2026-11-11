@@ -6,8 +6,8 @@ namespace Noosh24\OpenApi\Model;
 
 final class ReservationTable extends Model
 {
-    public ?string $id = null;
-    public ?string $label = null;
+    public readonly ?string $id;
+    public readonly ?string $label;
 
     /**
      * @param array<string, mixed> $data

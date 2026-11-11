@@ -6,17 +6,17 @@ namespace Noosh24\OpenApi\Model;
 
 final class Review extends Model
 {
-    public ?string $id = null;
-    public ?string $author = null;
-    public ?float $overall = null;
-    public ?ReviewRatings $ratings = null;
-    public ?string $body = null;
-    public ?string $visitType = null;
-    public ?\DateTimeImmutable $visitedOn = null;
-    public ?bool $verified = null;
-    public ?string $reply = null;
-    public ?\DateTimeImmutable $repliedAt = null;
-    public ?\DateTimeImmutable $createdAt = null;
+    public readonly ?string $id;
+    public readonly ?string $author;
+    public readonly ?float $overall;
+    public readonly ?ReviewRatings $ratings;
+    public readonly ?string $body;
+    public readonly ?string $visitType;
+    public readonly ?\DateTimeImmutable $visitedOn;
+    public readonly ?bool $verified;
+    public readonly ?string $reply;
+    public readonly ?\DateTimeImmutable $repliedAt;
+    public readonly ?\DateTimeImmutable $createdAt;
 
     /**
      * @param array<string, mixed> $data

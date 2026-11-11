@@ -35,25 +35,21 @@ class ApiException extends \RuntimeException implements Noosh24Exception
         429 => RateLimitException::class,
     ];
 
-    private int $status;
-
-    private ?string $errorCode;
-
     /** @var array<string, string> */
-    private array $headers;
-
-    private string $body;
+    private readonly array $headers;
 
     /**
      * @param array<string, string> $headers
      */
-    final public function __construct(int $status, ?string $errorCode, string $message, array $headers = [], string $body = '')
-    {
+    final public function __construct(
+        private readonly int $status,
+        private readonly ?string $errorCode,
+        string $message,
+        array $headers = [],
+        private readonly string $body = '',
+    ) {
         parent::__construct($message, $status);
-        $this->status = $status;
-        $this->errorCode = $errorCode;
         $this->headers = array_change_key_case($headers, CASE_LOWER);
-        $this->body = $body;
     }
 
     /**

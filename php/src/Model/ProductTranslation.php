@@ -6,8 +6,8 @@ namespace Noosh24\OpenApi\Model;
 
 final class ProductTranslation extends Model
 {
-    public ?string $name = null;
-    public ?string $description = null;
+    public readonly ?string $name;
+    public readonly ?string $description;
 
     /**
      * @param array<string, mixed> $data

@@ -4,9 +4,9 @@ Official clients for the [Noosh24 Open API](https://developer.noosh24.com).
 
 | Language | Folder | Package | Runtime |
 | --- | --- | --- | --- |
-| PHP | [`php/`](php) | `noosh24/open-api` (Packagist) | PHP 7.4+, ext-curl |
-| Node.js / TypeScript | [`node/`](node) | `@noosh24/open-api` (npm) | Node.js 18+ |
-| Python | [`python/`](python) | `noosh24` (PyPI) | Python 3.8+, httpx |
+| PHP | [`php/`](php) | `noosh24/open-api` (Packagist) | PHP 8.2+, ext-curl |
+| Node.js / TypeScript | [`node/`](node) | `@noosh24/open-api` (npm) | Node.js 22+ |
+| Python | [`python/`](python) | `noosh24` (PyPI) | Python 3.11+, httpx |
 
 All three share one shape: a client built from the venue's API key, one resource group per API tag (`menu`, `reservations`, `orders`, `payments`, `tables`, `customers`, `loyalty`, `stock`, `reviews`, plus `whoami()`), typed models, list methods with `limit`/`offset`/`sort`/`where`/`expand`, an auto-paginating iterator, a `where` builder, reservation create/cancel with `externalRef` idempotency, retries on `429`/`503` that honour `Retry-After`, and one error class per API `error` code.
 
@@ -16,13 +16,16 @@ All three share one shape: a client built from the venue's API key, one resource
 
 ```bash
 python3 tools/gen_models.py
+ruff format python/src
 ```
+
+Each SDK supports the runtime versions its upstream still maintains and is built with the newest tooling: PHPUnit 11.5 to 13.4 (whichever the PHP version allows), TypeScript 7 with tsdown and vitest 5, pytest 9 with ruff.
 
 ## Tests
 
 ```bash
 cd php && composer install && composer test
-cd node && npm install && npm test
+cd node && npm install && npm test && npm run build
 cd python && python3 -m venv .venv && .venv/bin/pip install -e '.[dev]' && .venv/bin/pytest
 ```
 

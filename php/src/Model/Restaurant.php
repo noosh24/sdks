@@ -6,9 +6,9 @@ namespace Noosh24\OpenApi\Model;
 
 final class Restaurant extends Model
 {
-    public ?string $id = null;
-    public ?string $name = null;
-    public ?string $slug = null;
+    public readonly ?string $id;
+    public readonly ?string $name;
+    public readonly ?string $slug;
 
     /**
      * @param array<string, mixed> $data

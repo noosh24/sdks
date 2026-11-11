@@ -9,12 +9,17 @@ from noosh24._client import _query_pairs
 
 
 def test_sends_key_and_headers_to_default_base_url(client, http):
-    http.json(200, {"data": {
-        "restaurant": {"id": "r1", "name": "Masago", "slug": "masago"},
-        "key": {"id": "k1", "name": "Wolt", "prefix": "nsk_Ab3dE9xQ", "scopes": ["menu:read", "orders:read"]},
-        "subscription": {"status": "active", "modules": ["loyalty"]},
-        "features": {"loyalty": True, "inventory": False},
-    }})
+    http.json(
+        200,
+        {
+            "data": {
+                "restaurant": {"id": "r1", "name": "Masago", "slug": "masago"},
+                "key": {"id": "k1", "name": "Wolt", "prefix": "nsk_Ab3dE9xQ", "scopes": ["menu:read", "orders:read"]},
+                "subscription": {"status": "active", "modules": ["loyalty"]},
+                "features": {"loyalty": True, "inventory": False},
+            }
+        },
+    )
 
     me = client.whoami()
 

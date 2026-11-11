@@ -42,7 +42,7 @@ final class Menu extends Resource
     /**
      * @param string|list<string>|null $expand
      */
-    public function getProduct(string $productId, $expand = null): Product
+    public function getProduct(string $productId, string|array|null $expand = null): Product
     {
         $query = [];
         $expand = self::expand($expand);

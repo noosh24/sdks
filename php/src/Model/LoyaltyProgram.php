@@ -6,18 +6,18 @@ namespace Noosh24\OpenApi\Model;
 
 final class LoyaltyProgram extends Model
 {
-    public ?int $stampsNeeded = null;
-    public ?string $earnBy = null;
-    public ?float $minBill = null;
-    public ?bool $oncePerDay = null;
-    public ?string $rewardName = null;
-    public ?string $rewardScope = null;
+    public readonly ?int $stampsNeeded;
+    public readonly ?string $earnBy;
+    public readonly ?float $minBill;
+    public readonly ?bool $oncePerDay;
+    public readonly ?string $rewardName;
+    public readonly ?string $rewardScope;
     /** @var list<string>|null */
-    public ?array $rewardCategories = null;
+    public readonly ?array $rewardCategories;
     /** @var list<string>|null */
-    public ?array $rewardProductIds = null;
-    public ?float $rewardMaxPrice = null;
-    public ?string $terms = null;
+    public readonly ?array $rewardProductIds;
+    public readonly ?float $rewardMaxPrice;
+    public readonly ?string $terms;
 
     /**
      * @param array<string, mixed> $data

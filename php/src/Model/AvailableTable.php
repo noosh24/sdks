@@ -6,12 +6,12 @@ namespace Noosh24\OpenApi\Model;
 
 final class AvailableTable extends Model
 {
-    public ?string $id = null;
-    public ?string $label = null;
-    public ?string $hallId = null;
-    public ?string $zone = null;
-    public ?int $seats = null;
-    public ?bool $free = null;
+    public readonly ?string $id;
+    public readonly ?string $label;
+    public readonly ?string $hallId;
+    public readonly ?string $zone;
+    public readonly ?int $seats;
+    public readonly ?bool $free;
 
     /**
      * @param array<string, mixed> $data

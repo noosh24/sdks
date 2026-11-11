@@ -6,10 +6,10 @@ namespace Noosh24\OpenApi\Model;
 
 final class Modifier extends Model
 {
-    public ?string $id = null;
-    public ?string $name = null;
-    public ?float $priceDelta = null;
-    public ?int $position = null;
+    public readonly ?string $id;
+    public readonly ?string $name;
+    public readonly ?float $priceDelta;
+    public readonly ?int $position;
 
     /**
      * @param array<string, mixed> $data

@@ -6,23 +6,23 @@ namespace Noosh24\OpenApi\Model;
 
 final class Payment extends Model
 {
-    public ?string $id = null;
-    public ?string $status = null;
-    public ?string $method = null;
-    public ?string $recordedMethod = null;
-    public ?float $amount = null;
-    public ?float $tip = null;
-    public ?float $refundedAmount = null;
-    public ?\DateTimeImmutable $refundedAt = null;
-    public ?string $refundReason = null;
-    public ?string $billId = null;
-    public ?string $reservationId = null;
-    public ?string $orderId = null;
-    public ?string $takenAt = null;
-    public ?PaymentCard $card = null;
-    public ?PaymentPlatform $platform = null;
-    public ?\DateTimeImmutable $createdAt = null;
-    public ?\DateTimeImmutable $settledAt = null;
+    public readonly ?string $id;
+    public readonly ?string $status;
+    public readonly ?string $method;
+    public readonly ?string $recordedMethod;
+    public readonly ?float $amount;
+    public readonly ?float $tip;
+    public readonly ?float $refundedAmount;
+    public readonly ?\DateTimeImmutable $refundedAt;
+    public readonly ?string $refundReason;
+    public readonly ?string $billId;
+    public readonly ?string $reservationId;
+    public readonly ?string $orderId;
+    public readonly ?string $takenAt;
+    public readonly ?PaymentCard $card;
+    public readonly ?PaymentPlatform $platform;
+    public readonly ?\DateTimeImmutable $createdAt;
+    public readonly ?\DateTimeImmutable $settledAt;
 
     /**
      * @param array<string, mixed> $data

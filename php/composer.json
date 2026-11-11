@@ -3,18 +3,25 @@
     "description": "Official PHP client for the Noosh24 Open API",
     "type": "library",
     "license": "MIT",
-    "keywords": ["noosh24", "restaurant", "pos", "open-api", "sdk", "azerbaijan"],
+    "keywords": [
+        "noosh24",
+        "restaurant",
+        "pos",
+        "open-api",
+        "sdk",
+        "azerbaijan"
+    ],
     "homepage": "https://developer.noosh24.com",
     "support": {
         "docs": "https://developer.noosh24.com/reference"
     },
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.2",
         "ext-curl": "*",
         "ext-json": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.6"
+        "phpunit/phpunit": "^11.5 || ^12.5 || ^13.4"
     },
     "autoload": {
         "psr-4": {
@@ -30,9 +37,6 @@
         "test": "phpunit"
     },
     "config": {
-        "sort-packages": true,
-        "platform": {
-            "php": "7.4.33"
-        }
+        "sort-packages": true
     }
 }

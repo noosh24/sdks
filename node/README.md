@@ -2,7 +2,7 @@
 
 Official Node.js and TypeScript client for the [Noosh24 Open API](https://developer.noosh24.com): read a venue's menu, reservations, orders, payments, tables, customers, loyalty, stock and reviews, and create or cancel reservations.
 
-- Node.js 18 or newer (uses the built-in `fetch`). No runtime dependencies.
+- Node.js 22 or newer (tested on 22, 24 and 26; uses the built-in `fetch`). No runtime dependencies.
 - ESM and CommonJS, with TypeScript types for every response.
 - API reference: https://developer.noosh24.com/reference
 

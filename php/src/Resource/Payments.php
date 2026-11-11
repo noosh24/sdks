@@ -33,10 +33,9 @@ final class Payments extends Resource
     }
 
     /**
-     * @param string|\DateTimeInterface|null $date
      * @return array<string, mixed>
      */
-    public function zReport($date = null): array
+    public function zReport(string|\DateTimeInterface|null $date = null): array
     {
         $query = $date === null ? [] : ['date' => self::date($date)];
         $data = $this->client->request('GET', '/reports/z', $query)['data'];

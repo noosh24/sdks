@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Any, Dict, List, Mapping, Optional
+from typing import Any
 
 from ._convert import _bool, _datetime, _float, _floats, _int, _list_of, _map_of, _object, _str, _strings
 
@@ -45,15 +46,15 @@ __all__ = [
 ]
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class Restaurant:
-    id: Optional[str] = None
-    name: Optional[str] = None
-    slug: Optional[str] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    name: str | None = None
+    slug: str | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "Restaurant":
+    def from_dict(cls, data: Mapping[str, Any]) -> Restaurant:
         return cls(
             id=_str(data.get("id")),
             name=_str(data.get("name")),
@@ -62,16 +63,16 @@ class Restaurant:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class ApiKeyInfo:
-    id: Optional[str] = None
-    name: Optional[str] = None
-    prefix: Optional[str] = None
-    scopes: List[str] = field(default_factory=list)
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    name: str | None = None
+    prefix: str | None = None
+    scopes: list[str] = field(default_factory=list)
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "ApiKeyInfo":
+    def from_dict(cls, data: Mapping[str, Any]) -> ApiKeyInfo:
         return cls(
             id=_str(data.get("id")),
             name=_str(data.get("name")),
@@ -81,14 +82,14 @@ class ApiKeyInfo:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class Subscription:
-    status: Optional[str] = None
-    modules: List[str] = field(default_factory=list)
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    status: str | None = None
+    modules: list[str] = field(default_factory=list)
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "Subscription":
+    def from_dict(cls, data: Mapping[str, Any]) -> Subscription:
         return cls(
             status=_str(data.get("status")),
             modules=_strings(data.get("modules")),
@@ -96,14 +97,14 @@ class Subscription:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class Features:
-    loyalty: Optional[bool] = None
-    inventory: Optional[bool] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    loyalty: bool | None = None
+    inventory: bool | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "Features":
+    def from_dict(cls, data: Mapping[str, Any]) -> Features:
         return cls(
             loyalty=_bool(data.get("loyalty")),
             inventory=_bool(data.get("inventory")),
@@ -111,16 +112,16 @@ class Features:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class Whoami:
-    restaurant: Optional[Restaurant] = None
-    key: Optional[ApiKeyInfo] = None
-    subscription: Optional[Subscription] = None
-    features: Optional[Features] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    restaurant: Restaurant | None = None
+    key: ApiKeyInfo | None = None
+    subscription: Subscription | None = None
+    features: Features | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "Whoami":
+    def from_dict(cls, data: Mapping[str, Any]) -> Whoami:
         return cls(
             restaurant=_object(data.get("restaurant"), Restaurant),
             key=_object(data.get("key"), ApiKeyInfo),
@@ -130,16 +131,16 @@ class Whoami:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class Category:
-    name: Optional[str] = None
-    position: Optional[int] = None
-    products: Optional[int] = None
-    available: Optional[int] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    name: str | None = None
+    position: int | None = None
+    products: int | None = None
+    available: int | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "Category":
+    def from_dict(cls, data: Mapping[str, Any]) -> Category:
         return cls(
             name=_str(data.get("name")),
             position=_int(data.get("position")),
@@ -149,16 +150,16 @@ class Category:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class Modifier:
-    id: Optional[str] = None
-    name: Optional[str] = None
-    price_delta: Optional[float] = None
-    position: Optional[int] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    name: str | None = None
+    price_delta: float | None = None
+    position: int | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "Modifier":
+    def from_dict(cls, data: Mapping[str, Any]) -> Modifier:
         return cls(
             id=_str(data.get("id")),
             name=_str(data.get("name")),
@@ -168,17 +169,17 @@ class Modifier:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class ModifierGroup:
-    id: Optional[str] = None
-    name: Optional[str] = None
-    required: Optional[bool] = None
-    position: Optional[int] = None
-    modifiers: List[Modifier] = field(default_factory=list)
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    name: str | None = None
+    required: bool | None = None
+    position: int | None = None
+    modifiers: list[Modifier] = field(default_factory=list)
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "ModifierGroup":
+    def from_dict(cls, data: Mapping[str, Any]) -> ModifierGroup:
         return cls(
             id=_str(data.get("id")),
             name=_str(data.get("name")),
@@ -189,14 +190,14 @@ class ModifierGroup:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class ProductTranslation:
-    name: Optional[str] = None
-    description: Optional[str] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    name: str | None = None
+    description: str | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "ProductTranslation":
+    def from_dict(cls, data: Mapping[str, Any]) -> ProductTranslation:
         return cls(
             name=_str(data.get("name")),
             description=_str(data.get("description")),
@@ -204,32 +205,32 @@ class ProductTranslation:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class Product:
-    id: Optional[str] = None
-    name: Optional[str] = None
-    category: Optional[str] = None
-    description: Optional[str] = None
-    price: Optional[float] = None
-    available: Optional[bool] = None
-    popular: Optional[bool] = None
-    position: Optional[int] = None
-    prep_minutes: Optional[int] = None
-    station: Optional[str] = None
-    vat_rate: Optional[float] = None
-    vegetarian: Optional[bool] = None
-    spicy: Optional[bool] = None
-    allergens: List[str] = field(default_factory=list)
-    discountable: Optional[bool] = None
-    has_modifiers: Optional[bool] = None
-    image: Optional[str] = None
-    video: Optional[str] = None
-    modifier_groups: List[ModifierGroup] = field(default_factory=list)
-    translations: Dict[str, ProductTranslation] = field(default_factory=dict)
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    name: str | None = None
+    category: str | None = None
+    description: str | None = None
+    price: float | None = None
+    available: bool | None = None
+    popular: bool | None = None
+    position: int | None = None
+    prep_minutes: int | None = None
+    station: str | None = None
+    vat_rate: float | None = None
+    vegetarian: bool | None = None
+    spicy: bool | None = None
+    allergens: list[str] = field(default_factory=list)
+    discountable: bool | None = None
+    has_modifiers: bool | None = None
+    image: str | None = None
+    video: str | None = None
+    modifier_groups: list[ModifierGroup] = field(default_factory=list)
+    translations: dict[str, ProductTranslation] = field(default_factory=dict)
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "Product":
+    def from_dict(cls, data: Mapping[str, Any]) -> Product:
         return cls(
             id=_str(data.get("id")),
             name=_str(data.get("name")),
@@ -255,16 +256,16 @@ class Product:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class StopListItem:
-    id: Optional[str] = None
-    name: Optional[str] = None
-    category: Optional[str] = None
-    price: Optional[float] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    name: str | None = None
+    category: str | None = None
+    price: float | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "StopListItem":
+    def from_dict(cls, data: Mapping[str, Any]) -> StopListItem:
         return cls(
             id=_str(data.get("id")),
             name=_str(data.get("name")),
@@ -274,15 +275,15 @@ class StopListItem:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class ReservationGuest:
-    name: Optional[str] = None
-    phone: Optional[str] = None
-    email: Optional[str] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    name: str | None = None
+    phone: str | None = None
+    email: str | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "ReservationGuest":
+    def from_dict(cls, data: Mapping[str, Any]) -> ReservationGuest:
         return cls(
             name=_str(data.get("name")),
             phone=_str(data.get("phone")),
@@ -291,14 +292,14 @@ class ReservationGuest:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class ReservationTable:
-    id: Optional[str] = None
-    label: Optional[str] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    label: str | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "ReservationTable":
+    def from_dict(cls, data: Mapping[str, Any]) -> ReservationTable:
         return cls(
             id=_str(data.get("id")),
             label=_str(data.get("label")),
@@ -306,17 +307,17 @@ class ReservationTable:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class ReservationPreOrderItem:
-    product_id: Optional[str] = None
-    name: Optional[str] = None
-    price: Optional[float] = None
-    qty: Optional[int] = None
-    note: Optional[str] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    product_id: str | None = None
+    name: str | None = None
+    price: float | None = None
+    qty: int | None = None
+    note: str | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "ReservationPreOrderItem":
+    def from_dict(cls, data: Mapping[str, Any]) -> ReservationPreOrderItem:
         return cls(
             product_id=_str(data.get("productId")),
             name=_str(data.get("name")),
@@ -327,32 +328,32 @@ class ReservationPreOrderItem:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class Reservation:
-    id: Optional[str] = None
-    code: Optional[str] = None
-    status: Optional[str] = None
-    source: Optional[str] = None
-    starts_at: Optional[datetime] = None
-    ends_at: Optional[datetime] = None
-    guests: Optional[int] = None
-    zone: Optional[str] = None
-    table: Optional[ReservationTable] = None
-    guest: Optional[ReservationGuest] = None
-    special_request: Optional[str] = None
-    allergy_note: Optional[str] = None
-    birthday: Optional[bool] = None
-    child_chair: Optional[bool] = None
-    deposit_paid: Optional[float] = None
-    pre_order: List[ReservationPreOrderItem] = field(default_factory=list)
-    external_ref: Optional[str] = None
-    decided_at: Optional[datetime] = None
-    created_at: Optional[datetime] = None
-    updated_at: Optional[datetime] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    code: str | None = None
+    status: str | None = None
+    source: str | None = None
+    starts_at: datetime | None = None
+    ends_at: datetime | None = None
+    guests: int | None = None
+    zone: str | None = None
+    table: ReservationTable | None = None
+    guest: ReservationGuest | None = None
+    special_request: str | None = None
+    allergy_note: str | None = None
+    birthday: bool | None = None
+    child_chair: bool | None = None
+    deposit_paid: float | None = None
+    pre_order: list[ReservationPreOrderItem] = field(default_factory=list)
+    external_ref: str | None = None
+    decided_at: datetime | None = None
+    created_at: datetime | None = None
+    updated_at: datetime | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "Reservation":
+    def from_dict(cls, data: Mapping[str, Any]) -> Reservation:
         return cls(
             id=_str(data.get("id")),
             code=_str(data.get("code")),
@@ -378,18 +379,18 @@ class Reservation:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class AvailableTable:
-    id: Optional[str] = None
-    label: Optional[str] = None
-    hall_id: Optional[str] = None
-    zone: Optional[str] = None
-    seats: Optional[int] = None
-    free: Optional[bool] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    label: str | None = None
+    hall_id: str | None = None
+    zone: str | None = None
+    seats: int | None = None
+    free: bool | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "AvailableTable":
+    def from_dict(cls, data: Mapping[str, Any]) -> AvailableTable:
         return cls(
             id=_str(data.get("id")),
             label=_str(data.get("label")),
@@ -401,18 +402,18 @@ class AvailableTable:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class TableAvailability:
-    starts_at: Optional[datetime] = None
-    ends_at: Optional[datetime] = None
-    duration_minutes: Optional[int] = None
-    open_time: Optional[str] = None
-    close_time: Optional[str] = None
-    tables: List[AvailableTable] = field(default_factory=list)
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    starts_at: datetime | None = None
+    ends_at: datetime | None = None
+    duration_minutes: int | None = None
+    open_time: str | None = None
+    close_time: str | None = None
+    tables: list[AvailableTable] = field(default_factory=list)
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "TableAvailability":
+    def from_dict(cls, data: Mapping[str, Any]) -> TableAvailability:
         return cls(
             starts_at=_datetime(data.get("startsAt")),
             ends_at=_datetime(data.get("endsAt")),
@@ -424,24 +425,24 @@ class TableAvailability:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class OrderItem:
-    id: Optional[str] = None
-    product_id: Optional[str] = None
-    name: Optional[str] = None
-    qty: Optional[int] = None
-    price: Optional[float] = None
-    list_price: Optional[float] = None
-    modifiers: Optional[str] = None
-    note: Optional[str] = None
-    status: Optional[str] = None
-    comp: Optional[bool] = None
-    campaign: Optional[str] = None
-    cancel_reason: Optional[str] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    product_id: str | None = None
+    name: str | None = None
+    qty: int | None = None
+    price: float | None = None
+    list_price: float | None = None
+    modifiers: str | None = None
+    note: str | None = None
+    status: str | None = None
+    comp: bool | None = None
+    campaign: str | None = None
+    cancel_reason: str | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "OrderItem":
+    def from_dict(cls, data: Mapping[str, Any]) -> OrderItem:
         return cls(
             id=_str(data.get("id")),
             product_id=_str(data.get("productId")),
@@ -459,15 +460,15 @@ class OrderItem:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class DeliveryPlatform:
-    id: Optional[str] = None
-    name: Optional[str] = None
-    ref: Optional[str] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    name: str | None = None
+    ref: str | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "DeliveryPlatform":
+    def from_dict(cls, data: Mapping[str, Any]) -> DeliveryPlatform:
         return cls(
             id=_str(data.get("id")),
             name=_str(data.get("name")),
@@ -476,22 +477,22 @@ class DeliveryPlatform:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class OrderDelivery:
-    status: Optional[str] = None
-    platform: Optional[DeliveryPlatform] = None
-    address: Optional[str] = None
-    customer_phone: Optional[str] = None
-    courier_name: Optional[str] = None
-    note: Optional[str] = None
-    payment_method: Optional[str] = None
-    fee: Optional[float] = None
-    platform_total: Optional[float] = None
-    accepted_at: Optional[datetime] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    status: str | None = None
+    platform: DeliveryPlatform | None = None
+    address: str | None = None
+    customer_phone: str | None = None
+    courier_name: str | None = None
+    note: str | None = None
+    payment_method: str | None = None
+    fee: float | None = None
+    platform_total: float | None = None
+    accepted_at: datetime | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "OrderDelivery":
+    def from_dict(cls, data: Mapping[str, Any]) -> OrderDelivery:
         return cls(
             status=_str(data.get("status")),
             platform=_object(data.get("platform"), DeliveryPlatform),
@@ -507,27 +508,27 @@ class OrderDelivery:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class Order:
-    id: Optional[str] = None
-    number: Optional[str] = None
-    daily_number: Optional[int] = None
-    kind: Optional[str] = None
-    order_type: Optional[str] = None
-    status: Optional[str] = None
-    table_id: Optional[str] = None
-    bill_id: Optional[str] = None
-    customer_name: Optional[str] = None
-    allergy_note: Optional[str] = None
-    items: List[OrderItem] = field(default_factory=list)
-    subtotal: Optional[float] = None
-    delivery: Optional[OrderDelivery] = None
-    created_at: Optional[datetime] = None
-    updated_at: Optional[datetime] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    number: str | None = None
+    daily_number: int | None = None
+    kind: str | None = None
+    order_type: str | None = None
+    status: str | None = None
+    table_id: str | None = None
+    bill_id: str | None = None
+    customer_name: str | None = None
+    allergy_note: str | None = None
+    items: list[OrderItem] = field(default_factory=list)
+    subtotal: float | None = None
+    delivery: OrderDelivery | None = None
+    created_at: datetime | None = None
+    updated_at: datetime | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "Order":
+    def from_dict(cls, data: Mapping[str, Any]) -> Order:
         return cls(
             id=_str(data.get("id")),
             number=_str(data.get("number")),
@@ -548,30 +549,30 @@ class Order:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class Bill:
-    id: Optional[str] = None
-    table_id: Optional[str] = None
-    status: Optional[str] = None
-    guests: Optional[int] = None
-    waiter: Optional[str] = None
-    customer_id: Optional[str] = None
-    reservation_id: Optional[str] = None
-    order_ids: List[str] = field(default_factory=list)
-    subtotal: Optional[float] = None
-    discount_percent: Optional[float] = None
-    bill_discount: Optional[float] = None
-    service_fee_percent: Optional[float] = None
-    service_fee: Optional[float] = None
-    total: Optional[float] = None
-    paid: Optional[float] = None
-    remaining: Optional[float] = None
-    opened_at: Optional[datetime] = None
-    closed_at: Optional[datetime] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    table_id: str | None = None
+    status: str | None = None
+    guests: int | None = None
+    waiter: str | None = None
+    customer_id: str | None = None
+    reservation_id: str | None = None
+    order_ids: list[str] = field(default_factory=list)
+    subtotal: float | None = None
+    discount_percent: float | None = None
+    bill_discount: float | None = None
+    service_fee_percent: float | None = None
+    service_fee: float | None = None
+    total: float | None = None
+    paid: float | None = None
+    remaining: float | None = None
+    opened_at: datetime | None = None
+    closed_at: datetime | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "Bill":
+    def from_dict(cls, data: Mapping[str, Any]) -> Bill:
         return cls(
             id=_str(data.get("id")),
             table_id=_str(data.get("tableId")),
@@ -595,15 +596,15 @@ class Bill:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class PaymentCard:
-    masked_pan: Optional[str] = None
-    scheme: Optional[str] = None
-    bank: Optional[str] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    masked_pan: str | None = None
+    scheme: str | None = None
+    bank: str | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "PaymentCard":
+    def from_dict(cls, data: Mapping[str, Any]) -> PaymentCard:
         return cls(
             masked_pan=_str(data.get("maskedPan")),
             scheme=_str(data.get("scheme")),
@@ -612,14 +613,14 @@ class PaymentCard:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class PaymentPlatform:
-    id: Optional[str] = None
-    name: Optional[str] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    name: str | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "PaymentPlatform":
+    def from_dict(cls, data: Mapping[str, Any]) -> PaymentPlatform:
         return cls(
             id=_str(data.get("id")),
             name=_str(data.get("name")),
@@ -627,29 +628,29 @@ class PaymentPlatform:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class Payment:
-    id: Optional[str] = None
-    status: Optional[str] = None
-    method: Optional[str] = None
-    recorded_method: Optional[str] = None
-    amount: Optional[float] = None
-    tip: Optional[float] = None
-    refunded_amount: Optional[float] = None
-    refunded_at: Optional[datetime] = None
-    refund_reason: Optional[str] = None
-    bill_id: Optional[str] = None
-    reservation_id: Optional[str] = None
-    order_id: Optional[str] = None
-    taken_at: Optional[str] = None
-    card: Optional[PaymentCard] = None
-    platform: Optional[PaymentPlatform] = None
-    created_at: Optional[datetime] = None
-    settled_at: Optional[datetime] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    status: str | None = None
+    method: str | None = None
+    recorded_method: str | None = None
+    amount: float | None = None
+    tip: float | None = None
+    refunded_amount: float | None = None
+    refunded_at: datetime | None = None
+    refund_reason: str | None = None
+    bill_id: str | None = None
+    reservation_id: str | None = None
+    order_id: str | None = None
+    taken_at: str | None = None
+    card: PaymentCard | None = None
+    platform: PaymentPlatform | None = None
+    created_at: datetime | None = None
+    settled_at: datetime | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "Payment":
+    def from_dict(cls, data: Mapping[str, Any]) -> Payment:
         return cls(
             id=_str(data.get("id")),
             status=_str(data.get("status")),
@@ -672,15 +673,15 @@ class Payment:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class Hall:
-    id: Optional[str] = None
-    name: Optional[str] = None
-    position: Optional[int] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    name: str | None = None
+    position: int | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "Hall":
+    def from_dict(cls, data: Mapping[str, Any]) -> Hall:
         return cls(
             id=_str(data.get("id")),
             name=_str(data.get("name")),
@@ -689,28 +690,28 @@ class Hall:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class Table:
-    id: Optional[str] = None
-    label: Optional[str] = None
-    hall_id: Optional[str] = None
-    zone: Optional[str] = None
-    seats: Optional[int] = None
-    shape: Optional[str] = None
-    status: Optional[str] = None
-    guests: Optional[int] = None
-    waiter: Optional[str] = None
-    seated_since: Optional[str] = None
-    open_orders: Optional[int] = None
-    bill_id: Optional[str] = None
-    bill_total: Optional[float] = None
-    bill_requested: Optional[bool] = None
-    bill_settled: Optional[bool] = None
-    merged_into: Optional[str] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    label: str | None = None
+    hall_id: str | None = None
+    zone: str | None = None
+    seats: int | None = None
+    shape: str | None = None
+    status: str | None = None
+    guests: int | None = None
+    waiter: str | None = None
+    seated_since: str | None = None
+    open_orders: int | None = None
+    bill_id: str | None = None
+    bill_total: float | None = None
+    bill_requested: bool | None = None
+    bill_settled: bool | None = None
+    merged_into: str | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "Table":
+    def from_dict(cls, data: Mapping[str, Any]) -> Table:
         return cls(
             id=_str(data.get("id")),
             label=_str(data.get("label")),
@@ -732,18 +733,18 @@ class Table:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class Customer:
-    id: Optional[str] = None
-    name: Optional[str] = None
-    phone: Optional[str] = None
-    note: Optional[str] = None
-    created_at: Optional[datetime] = None
-    updated_at: Optional[datetime] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    name: str | None = None
+    phone: str | None = None
+    note: str | None = None
+    created_at: datetime | None = None
+    updated_at: datetime | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "Customer":
+    def from_dict(cls, data: Mapping[str, Any]) -> Customer:
         return cls(
             id=_str(data.get("id")),
             name=_str(data.get("name")),
@@ -755,22 +756,22 @@ class Customer:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class LoyaltyProgram:
-    stamps_needed: Optional[int] = None
-    earn_by: Optional[str] = None
-    min_bill: Optional[float] = None
-    once_per_day: Optional[bool] = None
-    reward_name: Optional[str] = None
-    reward_scope: Optional[str] = None
-    reward_categories: List[str] = field(default_factory=list)
-    reward_product_ids: List[str] = field(default_factory=list)
-    reward_max_price: Optional[float] = None
-    terms: Optional[str] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    stamps_needed: int | None = None
+    earn_by: str | None = None
+    min_bill: float | None = None
+    once_per_day: bool | None = None
+    reward_name: str | None = None
+    reward_scope: str | None = None
+    reward_categories: list[str] = field(default_factory=list)
+    reward_product_ids: list[str] = field(default_factory=list)
+    reward_max_price: float | None = None
+    terms: str | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "LoyaltyProgram":
+    def from_dict(cls, data: Mapping[str, Any]) -> LoyaltyProgram:
         return cls(
             stamps_needed=_int(data.get("stampsNeeded")),
             earn_by=_str(data.get("earnBy")),
@@ -786,22 +787,22 @@ class LoyaltyProgram:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class LoyaltyCard:
-    id: Optional[str] = None
-    name: Optional[str] = None
-    phone: Optional[str] = None
-    stamps: Optional[int] = None
-    total_stamps: Optional[int] = None
-    redeemed: Optional[int] = None
-    source: Optional[str] = None
-    last_visit_at: Optional[datetime] = None
-    created_at: Optional[datetime] = None
-    updated_at: Optional[datetime] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    name: str | None = None
+    phone: str | None = None
+    stamps: int | None = None
+    total_stamps: int | None = None
+    redeemed: int | None = None
+    source: str | None = None
+    last_visit_at: datetime | None = None
+    created_at: datetime | None = None
+    updated_at: datetime | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "LoyaltyCard":
+    def from_dict(cls, data: Mapping[str, Any]) -> LoyaltyCard:
         return cls(
             id=_str(data.get("id")),
             name=_str(data.get("name")),
@@ -817,26 +818,26 @@ class LoyaltyCard:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class Ingredient:
-    id: Optional[str] = None
-    name: Optional[str] = None
-    unit: Optional[str] = None
-    stock: Optional[float] = None
-    on_open_bills: Optional[float] = None
-    available: Optional[float] = None
-    state: Optional[str] = None
-    low_stock: Optional[float] = None
-    par_stock: Optional[float] = None
-    cost_per_unit: Optional[float] = None
-    value: Optional[float] = None
-    prepared: Optional[bool] = None
-    by_store: Dict[str, float] = field(default_factory=dict)
-    updated_at: Optional[datetime] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    name: str | None = None
+    unit: str | None = None
+    stock: float | None = None
+    on_open_bills: float | None = None
+    available: float | None = None
+    state: str | None = None
+    low_stock: float | None = None
+    par_stock: float | None = None
+    cost_per_unit: float | None = None
+    value: float | None = None
+    prepared: bool | None = None
+    by_store: dict[str, float] = field(default_factory=dict)
+    updated_at: datetime | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "Ingredient":
+    def from_dict(cls, data: Mapping[str, Any]) -> Ingredient:
         return cls(
             id=_str(data.get("id")),
             name=_str(data.get("name")),
@@ -856,16 +857,16 @@ class Ingredient:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class StockStore:
-    id: Optional[str] = None
-    name: Optional[str] = None
-    is_default: Optional[bool] = None
-    stations: List[str] = field(default_factory=list)
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    name: str | None = None
+    is_default: bool | None = None
+    stations: list[str] = field(default_factory=list)
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "StockStore":
+    def from_dict(cls, data: Mapping[str, Any]) -> StockStore:
         return cls(
             id=_str(data.get("id")),
             name=_str(data.get("name")),
@@ -875,21 +876,21 @@ class StockStore:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class StockMove:
-    id: Optional[str] = None
-    ingredient_id: Optional[str] = None
-    qty: Optional[float] = None
-    reason: Optional[str] = None
-    order_id: Optional[str] = None
-    invoice_id: Optional[str] = None
-    store_id: Optional[str] = None
-    note: Optional[str] = None
-    created_at: Optional[datetime] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    ingredient_id: str | None = None
+    qty: float | None = None
+    reason: str | None = None
+    order_id: str | None = None
+    invoice_id: str | None = None
+    store_id: str | None = None
+    note: str | None = None
+    created_at: datetime | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "StockMove":
+    def from_dict(cls, data: Mapping[str, Any]) -> StockMove:
         return cls(
             id=_str(data.get("id")),
             ingredient_id=_str(data.get("ingredientId")),
@@ -904,17 +905,17 @@ class StockMove:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class ReviewRatings:
-    food: Optional[float] = None
-    service: Optional[float] = None
-    atmosphere: Optional[float] = None
-    cleanliness: Optional[float] = None
-    price: Optional[float] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    food: float | None = None
+    service: float | None = None
+    atmosphere: float | None = None
+    cleanliness: float | None = None
+    price: float | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "ReviewRatings":
+    def from_dict(cls, data: Mapping[str, Any]) -> ReviewRatings:
         return cls(
             food=_float(data.get("food")),
             service=_float(data.get("service")),
@@ -925,23 +926,23 @@ class ReviewRatings:
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class Review:
-    id: Optional[str] = None
-    author: Optional[str] = None
-    overall: Optional[float] = None
-    ratings: Optional[ReviewRatings] = None
-    body: Optional[str] = None
-    visit_type: Optional[str] = None
-    visited_on: Optional[datetime] = None
-    verified: Optional[bool] = None
-    reply: Optional[str] = None
-    replied_at: Optional[datetime] = None
-    created_at: Optional[datetime] = None
-    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
+    id: str | None = None
+    author: str | None = None
+    overall: float | None = None
+    ratings: ReviewRatings | None = None
+    body: str | None = None
+    visit_type: str | None = None
+    visited_on: datetime | None = None
+    verified: bool | None = None
+    reply: str | None = None
+    replied_at: datetime | None = None
+    created_at: datetime | None = None
+    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "Review":
+    def from_dict(cls, data: Mapping[str, Any]) -> Review:
         return cls(
             id=_str(data.get("id")),
             author=_str(data.get("author")),

@@ -4,38 +4,50 @@
   "description": "Official Node.js and TypeScript client for the Noosh24 Open API",
   "license": "MIT",
   "homepage": "https://developer.noosh24.com",
-  "keywords": ["noosh24", "restaurant", "pos", "open-api", "sdk", "azerbaijan"],
+  "keywords": [
+    "noosh24",
+    "restaurant",
+    "pos",
+    "open-api",
+    "sdk",
+    "azerbaijan"
+  ],
   "type": "module",
   "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
       },
       "require": {
         "types": "./dist/index.d.cts",
         "default": "./dist/index.cjs"
       }
-    }
+    },
+    "./package.json": "./package.json"
   },
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "sideEffects": false,
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "scripts": {
-    "build": "tsup src/index.ts --format esm,cjs --dts --clean --target node18",
+    "build": "tsdown",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "prepublishOnly": "npm run typecheck && npm test && npm run build"
   },
   "devDependencies": {
-    "@types/node": "^20.11.0",
-    "tsup": "^8.0.0",
-    "typescript": "^5.4.0",
-    "vitest": "^2.0.0"
+    "@types/node": "^26.6.6",
+    "tsdown": "^0.23.7",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
   }
 }

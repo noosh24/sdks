@@ -6,15 +6,11 @@ namespace Noosh24\OpenApi\Model;
 
 abstract class Model implements \JsonSerializable
 {
-    /** @var array<string, mixed> */
-    private array $raw;
-
     /**
      * @param array<string, mixed> $raw
      */
-    final protected function __construct(array $raw)
+    final protected function __construct(private readonly array $raw)
     {
-        $this->raw = $raw;
     }
 
     /**
@@ -80,7 +76,7 @@ abstract class Model implements \JsonSerializable
         $value = preg_replace('/(\.\d{6})\d+/', '$1', $data[$key]);
         try {
             return new \DateTimeImmutable((string) $value);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return null;
         }
     }
@@ -123,7 +119,7 @@ abstract class Model implements \JsonSerializable
      * @param callable(array<string, mixed>): T $factory
      * @return T|null
      */
-    protected static function object(array $data, string $key, callable $factory)
+    protected static function object(array $data, string $key, callable $factory): mixed
     {
         if (!isset($data[$key]) || !is_array($data[$key])) {
             return null;

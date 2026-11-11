@@ -6,10 +6,10 @@ namespace Noosh24\OpenApi\Model;
 
 final class Whoami extends Model
 {
-    public ?Restaurant $restaurant = null;
-    public ?ApiKeyInfo $key = null;
-    public ?Subscription $subscription = null;
-    public ?Features $features = null;
+    public readonly ?Restaurant $restaurant;
+    public readonly ?ApiKeyInfo $key;
+    public readonly ?Subscription $subscription;
+    public readonly ?Features $features;
 
     /**
      * @param array<string, mixed> $data

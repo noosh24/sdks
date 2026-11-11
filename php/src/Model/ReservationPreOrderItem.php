@@ -6,11 +6,11 @@ namespace Noosh24\OpenApi\Model;
 
 final class ReservationPreOrderItem extends Model
 {
-    public ?string $productId = null;
-    public ?string $name = null;
-    public ?float $price = null;
-    public ?int $qty = null;
-    public ?string $note = null;
+    public readonly ?string $productId;
+    public readonly ?string $name;
+    public readonly ?float $price;
+    public readonly ?int $qty;
+    public readonly ?string $note;
 
     /**
      * @param array<string, mixed> $data

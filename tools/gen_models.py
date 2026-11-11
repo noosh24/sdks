@@ -152,7 +152,7 @@ def gen_php():
             doc = php_doc(kind)
             if doc:
                 lines.append("    /** @var %s|null */" % doc)
-            lines.append("    public %s $%s = null;" % (php_type(kind), fname))
+            lines.append("    public readonly %s $%s;" % (php_type(kind), fname))
         lines += [
             "",
             "    /**",
@@ -212,24 +212,24 @@ def gen_ts():
 
 def py_type(kind):
     if kind == "s":
-        return "Optional[str]"
+        return "str | None"
     if kind == "i":
-        return "Optional[int]"
+        return "int | None"
     if kind == "f":
-        return "Optional[float]"
+        return "float | None"
     if kind == "b":
-        return "Optional[bool]"
+        return "bool | None"
     if kind == "t":
-        return "Optional[datetime]"
+        return "datetime | None"
     if kind == "[s]":
-        return "List[str]"
+        return "list[str]"
     if kind == "{f}":
-        return "Dict[str, float]"
+        return "dict[str, float]"
     if kind.startswith("["):
-        return "List[%s]" % kind[1:-1]
+        return "list[%s]" % kind[1:-1]
     if kind.startswith("{"):
-        return "Dict[str, %s]" % kind[1:-1]
-    return "Optional[%s]" % kind
+        return "dict[str, %s]" % kind[1:-1]
+    return "%s | None" % kind
 
 
 def py_default(kind):
@@ -267,9 +267,10 @@ def gen_py():
     lines = [
         "from __future__ import annotations",
         "",
+        "from collections.abc import Mapping",
         "from dataclasses import dataclass, field",
         "from datetime import datetime",
-        "from typing import Any, Dict, List, Mapping, Optional",
+        "from typing import Any",
         "",
         "from ._convert import _bool, _datetime, _float, _floats, _int, _list_of, _map_of, _object, _str, _strings",
         "",
@@ -280,15 +281,15 @@ def gen_py():
     lines += ["]", "", ""]
     for name, desc, spec in MODELS:
         fields = parse(spec)
-        lines.append("@dataclass(frozen=True)")
+        lines.append("@dataclass(frozen=True, slots=True, kw_only=True)")
         lines.append("class %s:" % name)
         for fname, kind, _, _ in fields:
             lines.append("    %s: %s = %s" % (snake(fname), py_type(kind), py_default(kind)))
-        lines.append("    raw: Dict[str, Any] = field(default_factory=dict, repr=False, compare=False)")
+        lines.append("    raw: dict[str, Any] = field(default_factory=dict, repr=False, compare=False)")
         lines += [
             "",
             "    @classmethod",
-            "    def from_dict(cls, data: Mapping[str, Any]) -> \"%s\":" % name,
+            "    def from_dict(cls, data: Mapping[str, Any]) -> %s:" % name,
             "        return cls(",
         ]
         for fname, kind, _, _ in fields:

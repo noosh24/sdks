@@ -6,9 +6,9 @@ namespace Noosh24\OpenApi\Model;
 
 final class DeliveryPlatform extends Model
 {
-    public ?string $id = null;
-    public ?string $name = null;
-    public ?string $ref = null;
+    public readonly ?string $id;
+    public readonly ?string $name;
+    public readonly ?string $ref;
 
     /**
      * @param array<string, mixed> $data

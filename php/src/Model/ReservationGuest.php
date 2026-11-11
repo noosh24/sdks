@@ -6,9 +6,9 @@ namespace Noosh24\OpenApi\Model;
 
 final class ReservationGuest extends Model
 {
-    public ?string $name = null;
-    public ?string $phone = null;
-    public ?string $email = null;
+    public readonly ?string $name;
+    public readonly ?string $phone;
+    public readonly ?string $email;
 
     /**
      * @param array<string, mixed> $data

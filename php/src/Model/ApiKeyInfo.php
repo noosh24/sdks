@@ -6,11 +6,11 @@ namespace Noosh24\OpenApi\Model;
 
 final class ApiKeyInfo extends Model
 {
-    public ?string $id = null;
-    public ?string $name = null;
-    public ?string $prefix = null;
+    public readonly ?string $id;
+    public readonly ?string $name;
+    public readonly ?string $prefix;
     /** @var list<string>|null */
-    public ?array $scopes = null;
+    public readonly ?array $scopes;
 
     /**
      * @param array<string, mixed> $data

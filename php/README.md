@@ -2,7 +2,7 @@
 
 Official PHP client for the [Noosh24 Open API](https://developer.noosh24.com): read a venue's menu, reservations, orders, payments, tables, customers, loyalty, stock and reviews, and create or cancel reservations.
 
-- PHP 7.4 or newer, `ext-curl`, `ext-json`. No other dependencies.
+- PHP 8.2 or newer (tested on 8.2, 8.3, 8.4 and 8.5), `ext-curl`, `ext-json`. No other dependencies.
 - API reference: https://developer.noosh24.com/reference
 
 ## Install

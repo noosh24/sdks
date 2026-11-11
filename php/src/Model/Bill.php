@@ -6,25 +6,25 @@ namespace Noosh24\OpenApi\Model;
 
 final class Bill extends Model
 {
-    public ?string $id = null;
-    public ?string $tableId = null;
-    public ?string $status = null;
-    public ?int $guests = null;
-    public ?string $waiter = null;
-    public ?string $customerId = null;
-    public ?string $reservationId = null;
+    public readonly ?string $id;
+    public readonly ?string $tableId;
+    public readonly ?string $status;
+    public readonly ?int $guests;
+    public readonly ?string $waiter;
+    public readonly ?string $customerId;
+    public readonly ?string $reservationId;
     /** @var list<string>|null */
-    public ?array $orderIds = null;
-    public ?float $subtotal = null;
-    public ?float $discountPercent = null;
-    public ?float $billDiscount = null;
-    public ?float $serviceFeePercent = null;
-    public ?float $serviceFee = null;
-    public ?float $total = null;
-    public ?float $paid = null;
-    public ?float $remaining = null;
-    public ?\DateTimeImmutable $openedAt = null;
-    public ?\DateTimeImmutable $closedAt = null;
+    public readonly ?array $orderIds;
+    public readonly ?float $subtotal;
+    public readonly ?float $discountPercent;
+    public readonly ?float $billDiscount;
+    public readonly ?float $serviceFeePercent;
+    public readonly ?float $serviceFee;
+    public readonly ?float $total;
+    public readonly ?float $paid;
+    public readonly ?float $remaining;
+    public readonly ?\DateTimeImmutable $openedAt;
+    public readonly ?\DateTimeImmutable $closedAt;
 
     /**
      * @param array<string, mixed> $data

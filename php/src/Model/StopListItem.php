@@ -6,10 +6,10 @@ namespace Noosh24\OpenApi\Model;
 
 final class StopListItem extends Model
 {
-    public ?string $id = null;
-    public ?string $name = null;
-    public ?string $category = null;
-    public ?float $price = null;
+    public readonly ?string $id;
+    public readonly ?string $name;
+    public readonly ?string $category;
+    public readonly ?float $price;
 
     /**
      * @param array<string, mixed> $data

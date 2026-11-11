@@ -12,11 +12,8 @@ abstract class Resource
 {
     private const LIST_KEYS = ['limit', 'offset', 'sort', 'where', 'expand'];
 
-    protected Client $client;
-
-    final public function __construct(Client $client)
+    final public function __construct(protected readonly Client $client)
     {
-        $this->client = $client;
     }
 
     /**
@@ -89,7 +86,7 @@ abstract class Resource
      * @param callable(array<string, mixed>): T $factory
      * @return T
      */
-    protected function fetchOne(string $path, array $query, callable $factory)
+    protected function fetchOne(string $path, array $query, callable $factory): mixed
     {
         $data = $this->client->request('GET', $path, $query)['data'];
 
@@ -109,7 +106,7 @@ abstract class Resource
      * @param string|list<string>|null $expand
      * @return list<string>
      */
-    protected static function expand($expand): array
+    protected static function expand(string|array|null $expand): array
     {
         if ($expand === null || $expand === '' || $expand === []) {
             return [];
@@ -118,10 +115,7 @@ abstract class Resource
         return is_array($expand) ? array_values($expand) : [$expand];
     }
 
-    /**
-     * @param string|\DateTimeInterface $date
-     */
-    protected static function date($date): string
+    protected static function date(string|\DateTimeInterface $date): string
     {
         return $date instanceof \DateTimeInterface ? $date->format('Y-m-d') : $date;
     }

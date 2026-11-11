@@ -6,22 +6,22 @@ namespace Noosh24\OpenApi\Model;
 
 final class Table extends Model
 {
-    public ?string $id = null;
-    public ?string $label = null;
-    public ?string $hallId = null;
-    public ?string $zone = null;
-    public ?int $seats = null;
-    public ?string $shape = null;
-    public ?string $status = null;
-    public ?int $guests = null;
-    public ?string $waiter = null;
-    public ?string $seatedSince = null;
-    public ?int $openOrders = null;
-    public ?string $billId = null;
-    public ?float $billTotal = null;
-    public ?bool $billRequested = null;
-    public ?bool $billSettled = null;
-    public ?string $mergedInto = null;
+    public readonly ?string $id;
+    public readonly ?string $label;
+    public readonly ?string $hallId;
+    public readonly ?string $zone;
+    public readonly ?int $seats;
+    public readonly ?string $shape;
+    public readonly ?string $status;
+    public readonly ?int $guests;
+    public readonly ?string $waiter;
+    public readonly ?string $seatedSince;
+    public readonly ?int $openOrders;
+    public readonly ?string $billId;
+    public readonly ?float $billTotal;
+    public readonly ?bool $billRequested;
+    public readonly ?bool $billSettled;
+    public readonly ?string $mergedInto;
 
     /**
      * @param array<string, mixed> $data

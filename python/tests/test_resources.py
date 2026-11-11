@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date, datetime, timezone
+from datetime import UTC, date, datetime
 
 import pytest
 
@@ -9,23 +9,59 @@ from noosh24 import PreOrderLine, Product, ServerError, TableTakenError, where
 from .conftest import body, page, query
 
 PRODUCT = {
-    "id": "0b6f3c1e", "name": "Plov", "category": "Main", "description": "Saffron rice with lamb", "price": 14,
-    "available": True, "popular": True, "position": 3, "prepMinutes": 20, "station": "", "vatRate": None,
-    "vegetarian": False, "spicy": False, "allergens": ["gluten"], "discountable": True, "hasModifiers": True,
-    "image": "https://api.noosh24.com/m/5c1d.jpg", "video": None,
-    "modifierGroups": [{"id": "g1", "name": "Size", "required": True, "position": 0, "modifiers": [
-        {"id": "m1", "name": "Large", "priceDelta": 2.5, "position": 0},
-    ]}],
+    "id": "0b6f3c1e",
+    "name": "Plov",
+    "category": "Main",
+    "description": "Saffron rice with lamb",
+    "price": 14,
+    "available": True,
+    "popular": True,
+    "position": 3,
+    "prepMinutes": 20,
+    "station": "",
+    "vatRate": None,
+    "vegetarian": False,
+    "spicy": False,
+    "allergens": ["gluten"],
+    "discountable": True,
+    "hasModifiers": True,
+    "image": "https://api.noosh24.com/m/5c1d.jpg",
+    "video": None,
+    "modifierGroups": [
+        {
+            "id": "g1",
+            "name": "Size",
+            "required": True,
+            "position": 0,
+            "modifiers": [
+                {"id": "m1", "name": "Large", "priceDelta": 2.5, "position": 0},
+            ],
+        }
+    ],
     "translations": {"en": {"name": "Pilaf", "description": "Rice"}, "ru": {"name": "Плов"}},
 }
 
 RESERVATION = {
-    "id": "res1", "code": "K7Q2", "status": "pending", "source": "open_api",
-    "startsAt": "2026-11-20T15:30:00Z", "endsAt": "2026-11-20T17:30:00.123456789Z", "guests": 4, "zone": "Terrace",
-    "table": {"id": "t5", "label": "T5"}, "guest": {"name": "Aysel", "phone": "+994501234567", "email": None},
-    "specialRequest": None, "allergyNote": None, "birthday": False, "childChair": True, "depositPaid": 0,
+    "id": "res1",
+    "code": "K7Q2",
+    "status": "pending",
+    "source": "open_api",
+    "startsAt": "2026-11-20T15:30:00Z",
+    "endsAt": "2026-11-20T17:30:00.123456789Z",
+    "guests": 4,
+    "zone": "Terrace",
+    "table": {"id": "t5", "label": "T5"},
+    "guest": {"name": "Aysel", "phone": "+994501234567", "email": None},
+    "specialRequest": None,
+    "allergyNote": None,
+    "birthday": False,
+    "childChair": True,
+    "depositPaid": 0,
     "preOrder": [{"productId": "p1", "name": "Plov", "price": 14.5, "qty": 2, "note": None}],
-    "externalRef": "acme-991", "decidedAt": None, "createdAt": "2026-11-11T10:00:00.5Z", "updatedAt": "2026-11-11T10:00:00Z",
+    "externalRef": "acme-991",
+    "decidedAt": None,
+    "createdAt": "2026-11-11T10:00:00.5Z",
+    "updatedAt": "2026-11-11T10:00:00Z",
 }
 
 BOOKING = dict(date="2026-11-20", time="19:30", guests=4, guest_name="Aysel Məmmədova", phone="+994501234567")
@@ -135,9 +171,9 @@ def test_reservation_parses_nested_fields_and_times(client, http):
 
     reservation = client.reservations.get("res1")
 
-    assert reservation.starts_at == datetime(2026, 11, 20, 15, 30, tzinfo=timezone.utc)
-    assert reservation.ends_at == datetime(2026, 11, 20, 17, 30, 0, 123456, tzinfo=timezone.utc)
-    assert reservation.created_at == datetime(2026, 11, 11, 10, 0, 0, 500000, tzinfo=timezone.utc)
+    assert reservation.starts_at == datetime(2026, 11, 20, 15, 30, tzinfo=UTC)
+    assert reservation.ends_at == datetime(2026, 11, 20, 17, 30, 0, 123456, tzinfo=UTC)
+    assert reservation.created_at == datetime(2026, 11, 11, 10, 0, 0, 500000, tzinfo=UTC)
     assert reservation.decided_at is None
     assert reservation.table.label == "T5"
     assert reservation.guest.phone == "+994501234567"
@@ -147,11 +183,19 @@ def test_reservation_parses_nested_fields_and_times(client, http):
 
 
 def test_availability(client, http):
-    http.json(200, {"data": {
-        "startsAt": "2026-11-20T15:30:00Z", "endsAt": "2026-11-20T17:30:00Z", "durationMinutes": 120,
-        "openTime": "10:00", "closeTime": "23:00",
-        "tables": [{"id": "t5", "label": "T5", "hallId": "h1", "zone": "Terrace", "seats": 4, "free": True}],
-    }})
+    http.json(
+        200,
+        {
+            "data": {
+                "startsAt": "2026-11-20T15:30:00Z",
+                "endsAt": "2026-11-20T17:30:00Z",
+                "durationMinutes": 120,
+                "openTime": "10:00",
+                "closeTime": "23:00",
+                "tables": [{"id": "t5", "label": "T5", "hallId": "h1", "zone": "Terrace", "seats": 4, "free": True}],
+            }
+        },
+    )
 
     result = client.reservations.availability(date(2026, 11, 20), "19:30", guests=4)
 
@@ -179,11 +223,16 @@ def test_create_reservation_posts_json_and_reports_created(client, http):
     assert str(request.url) == "https://open-api.noosh24.com/v1/reservations"
     assert request.headers["content-type"] == "application/json"
     assert body(request) == {
-        "date": "2026-11-20", "time": "19:30", "guests": 4, "guestName": "Aysel Məmmədova", "phone": "+994501234567",
-        "childChair": True, "externalRef": "acme-991",
+        "date": "2026-11-20",
+        "time": "19:30",
+        "guests": 4,
+        "guestName": "Aysel Məmmədova",
+        "phone": "+994501234567",
+        "childChair": True,
+        "externalRef": "acme-991",
         "preOrder": [{"itemId": "p1", "qty": 2}, {"itemId": "p2", "qty": 1, "note": "no onion"}],
     }
-    assert "Məmmədova".encode("utf-8") in request.content
+    assert "Məmmədova".encode() in request.content
     assert result.created is True
     assert result.reservation.code == "K7Q2"
 
@@ -235,13 +284,39 @@ def test_cancel(client, http):
 
 
 def test_orders_bills_payments_and_z_report(client, http):
-    http.json(200, {"data": {
-        "id": "o1", "number": "A-12", "dailyNumber": 12, "kind": "delivery", "status": "ready", "subtotal": 30,
-        "items": [{"id": "i1", "productId": "p1", "name": "Plov", "qty": 2, "price": 15, "comp": False}],
-        "delivery": {"status": "accepted", "platform": {"id": "wolt", "name": "Wolt", "ref": "W-1"}, "fee": 2, "acceptedAt": "2026-11-11T09:00:00Z"},
-    }})
+    http.json(
+        200,
+        {
+            "data": {
+                "id": "o1",
+                "number": "A-12",
+                "dailyNumber": 12,
+                "kind": "delivery",
+                "status": "ready",
+                "subtotal": 30,
+                "items": [{"id": "i1", "productId": "p1", "name": "Plov", "qty": 2, "price": 15, "comp": False}],
+                "delivery": {
+                    "status": "accepted",
+                    "platform": {"id": "wolt", "name": "Wolt", "ref": "W-1"},
+                    "fee": 2,
+                    "acceptedAt": "2026-11-11T09:00:00Z",
+                },
+            }
+        },
+    )
     http.json(200, {"data": {"id": "b1", "status": "paid", "orderIds": ["o1", "o2"], "total": 45.5, "closedAt": None}})
-    http.json(200, {"data": {"id": "pay1", "method": "card", "amount": 20, "card": {"maskedPan": "4169********1234", "scheme": "visa", "bank": "Kapital"}, "platform": None}})
+    http.json(
+        200,
+        {
+            "data": {
+                "id": "pay1",
+                "method": "card",
+                "amount": 20,
+                "card": {"maskedPan": "4169********1234", "scheme": "visa", "bank": "Kapital"},
+                "platform": None,
+            }
+        },
+    )
     http.json(200, {"data": {"date": "2026-11-10", "cash": 120.5}})
 
     order = client.orders.get("o1")
@@ -278,7 +353,12 @@ def test_tables_loyalty_stock_and_reviews(client, http):
     assert review.ratings.food == 5.0
     assert review.ratings.price is None
     assert [r.url.path for r in http.requests] == [
-        "/v1/tables", "/v1/loyalty/program", "/v1/loyalty/cards", "/v1/stock/ingredients", "/v1/stock/stores", "/v1/reviews",
+        "/v1/tables",
+        "/v1/loyalty/program",
+        "/v1/loyalty/cards",
+        "/v1/stock/ingredients",
+        "/v1/stock/stores",
+        "/v1/reviews",
     ]
 
 

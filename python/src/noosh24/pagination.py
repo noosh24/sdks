@@ -1,16 +1,17 @@
 from __future__ import annotations
 
+from collections.abc import Iterator
 from dataclasses import dataclass, field
-from typing import Generic, Iterator, List, TypeVar
+from typing import Generic, TypeVar
 
 T = TypeVar("T")
 
 __all__ = ["Page"]
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, kw_only=True)
 class Page(Generic[T]):
-    items: List[T] = field(default_factory=list)
+    items: list[T] = field(default_factory=list)
     total: int = 0
     limit: int = 0
     offset: int = 0

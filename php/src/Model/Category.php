@@ -6,10 +6,10 @@ namespace Noosh24\OpenApi\Model;
 
 final class Category extends Model
 {
-    public ?string $name = null;
-    public ?int $position = null;
-    public ?int $products = null;
-    public ?int $available = null;
+    public readonly ?string $name;
+    public readonly ?int $position;
+    public readonly ?int $products;
+    public readonly ?int $available;
 
     /**
      * @param array<string, mixed> $data

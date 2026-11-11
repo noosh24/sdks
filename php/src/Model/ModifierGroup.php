@@ -6,12 +6,12 @@ namespace Noosh24\OpenApi\Model;
 
 final class ModifierGroup extends Model
 {
-    public ?string $id = null;
-    public ?string $name = null;
-    public ?bool $required = null;
-    public ?int $position = null;
+    public readonly ?string $id;
+    public readonly ?string $name;
+    public readonly ?bool $required;
+    public readonly ?int $position;
     /** @var list<Modifier>|null */
-    public ?array $modifiers = null;
+    public readonly ?array $modifiers;
 
     /**
      * @param array<string, mixed> $data

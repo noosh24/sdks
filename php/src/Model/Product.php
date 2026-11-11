@@ -6,29 +6,29 @@ namespace Noosh24\OpenApi\Model;
 
 final class Product extends Model
 {
-    public ?string $id = null;
-    public ?string $name = null;
-    public ?string $category = null;
-    public ?string $description = null;
-    public ?float $price = null;
-    public ?bool $available = null;
-    public ?bool $popular = null;
-    public ?int $position = null;
-    public ?int $prepMinutes = null;
-    public ?string $station = null;
-    public ?float $vatRate = null;
-    public ?bool $vegetarian = null;
-    public ?bool $spicy = null;
+    public readonly ?string $id;
+    public readonly ?string $name;
+    public readonly ?string $category;
+    public readonly ?string $description;
+    public readonly ?float $price;
+    public readonly ?bool $available;
+    public readonly ?bool $popular;
+    public readonly ?int $position;
+    public readonly ?int $prepMinutes;
+    public readonly ?string $station;
+    public readonly ?float $vatRate;
+    public readonly ?bool $vegetarian;
+    public readonly ?bool $spicy;
     /** @var list<string>|null */
-    public ?array $allergens = null;
-    public ?bool $discountable = null;
-    public ?bool $hasModifiers = null;
-    public ?string $image = null;
-    public ?string $video = null;
+    public readonly ?array $allergens;
+    public readonly ?bool $discountable;
+    public readonly ?bool $hasModifiers;
+    public readonly ?string $image;
+    public readonly ?string $video;
     /** @var list<ModifierGroup>|null */
-    public ?array $modifierGroups = null;
+    public readonly ?array $modifierGroups;
     /** @var array<string, ProductTranslation>|null */
-    public ?array $translations = null;
+    public readonly ?array $translations;
 
     /**
      * @param array<string, mixed> $data

@@ -6,15 +6,15 @@ namespace Noosh24\OpenApi\Model;
 
 final class StockMove extends Model
 {
-    public ?string $id = null;
-    public ?string $ingredientId = null;
-    public ?float $qty = null;
-    public ?string $reason = null;
-    public ?string $orderId = null;
-    public ?string $invoiceId = null;
-    public ?string $storeId = null;
-    public ?string $note = null;
-    public ?\DateTimeImmutable $createdAt = null;
+    public readonly ?string $id;
+    public readonly ?string $ingredientId;
+    public readonly ?float $qty;
+    public readonly ?string $reason;
+    public readonly ?string $orderId;
+    public readonly ?string $invoiceId;
+    public readonly ?string $storeId;
+    public readonly ?string $note;
+    public readonly ?\DateTimeImmutable $createdAt;
 
     /**
      * @param array<string, mixed> $data

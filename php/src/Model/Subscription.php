@@ -6,9 +6,9 @@ namespace Noosh24\OpenApi\Model;
 
 final class Subscription extends Model
 {
-    public ?string $status = null;
+    public readonly ?string $status;
     /** @var list<string>|null */
-    public ?array $modules = null;
+    public readonly ?array $modules;
 
     /**
      * @param array<string, mixed> $data

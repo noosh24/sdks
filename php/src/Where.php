@@ -14,50 +14,32 @@ final class Where
         return new self();
     }
 
-    /**
-     * @param string|int|float|bool|\DateTimeInterface $value
-     */
-    public function eq(string $field, $value): self
+    public function eq(string $field, string|int|float|bool|\DateTimeInterface $value): self
     {
         return $this->add($field, '=', $value);
     }
 
-    /**
-     * @param string|int|float|bool|\DateTimeInterface $value
-     */
-    public function ne(string $field, $value): self
+    public function ne(string $field, string|int|float|bool|\DateTimeInterface $value): self
     {
         return $this->add($field, '!=', $value);
     }
 
-    /**
-     * @param string|int|float|\DateTimeInterface $value
-     */
-    public function gt(string $field, $value): self
+    public function gt(string $field, string|int|float|\DateTimeInterface $value): self
     {
         return $this->add($field, '>', $value);
     }
 
-    /**
-     * @param string|int|float|\DateTimeInterface $value
-     */
-    public function gte(string $field, $value): self
+    public function gte(string $field, string|int|float|\DateTimeInterface $value): self
     {
         return $this->add($field, '>=', $value);
     }
 
-    /**
-     * @param string|int|float|\DateTimeInterface $value
-     */
-    public function lt(string $field, $value): self
+    public function lt(string $field, string|int|float|\DateTimeInterface $value): self
     {
         return $this->add($field, '<', $value);
     }
 
-    /**
-     * @param string|int|float|\DateTimeInterface $value
-     */
-    public function lte(string $field, $value): self
+    public function lte(string $field, string|int|float|\DateTimeInterface $value): self
     {
         return $this->add($field, '<=', $value);
     }
@@ -85,10 +67,7 @@ final class Where
         return $this->toString();
     }
 
-    /**
-     * @param mixed $value
-     */
-    public static function literal($value): string
+    public static function literal(mixed $value): string
     {
         if ($value instanceof \DateTimeInterface) {
             return "'" . $value->format(\DateTimeInterface::RFC3339) . "'";
@@ -109,10 +88,7 @@ final class Where
         throw new \InvalidArgumentException('where takes strings, numbers, booleans and dates');
     }
 
-    /**
-     * @param mixed $value
-     */
-    private function add(string $field, string $operator, $value): self
+    private function add(string $field, string $operator, mixed $value): self
     {
         $this->conditions[] = $this->field($field) . ' ' . $operator . ' ' . self::literal($value);
 

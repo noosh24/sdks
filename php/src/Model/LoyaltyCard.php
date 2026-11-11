@@ -6,16 +6,16 @@ namespace Noosh24\OpenApi\Model;
 
 final class LoyaltyCard extends Model
 {
-    public ?string $id = null;
-    public ?string $name = null;
-    public ?string $phone = null;
-    public ?int $stamps = null;
-    public ?int $totalStamps = null;
-    public ?int $redeemed = null;
-    public ?string $source = null;
-    public ?\DateTimeImmutable $lastVisitAt = null;
-    public ?\DateTimeImmutable $createdAt = null;
-    public ?\DateTimeImmutable $updatedAt = null;
+    public readonly ?string $id;
+    public readonly ?string $name;
+    public readonly ?string $phone;
+    public readonly ?int $stamps;
+    public readonly ?int $totalStamps;
+    public readonly ?int $redeemed;
+    public readonly ?string $source;
+    public readonly ?\DateTimeImmutable $lastVisitAt;
+    public readonly ?\DateTimeImmutable $createdAt;
+    public readonly ?\DateTimeImmutable $updatedAt;
 
     /**
      * @param array<string, mixed> $data

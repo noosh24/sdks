@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Noosh24\OpenApi\Tests;
 
 use Noosh24\OpenApi\Exception;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class ErrorsTest extends TestCase
 {
     /**
      * @return iterable<string, array{int, ?string, class-string, class-string}>
      */
-    public function cases(): iterable
+    public static function cases(): iterable
     {
         yield 'validation_error' => [400, 'validation_error', Exception\ValidationException::class, Exception\ApiException::class];
         yield 'no_api_key' => [401, 'no_api_key', Exception\NoApiKeyException::class, Exception\AuthenticationException::class];
@@ -36,10 +37,10 @@ final class ErrorsTest extends TestCase
     }
 
     /**
-     * @dataProvider cases
      * @param class-string $class
      * @param class-string $parent
      */
+    #[DataProvider('cases')]
     public function testMapsErrorCodes(int $status, ?string $code, string $class, string $parent): void
     {
         $client = $this->client(['maxRetries' => 0]);
