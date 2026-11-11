@@ -55,7 +55,7 @@ LANGS = [
     },
     {
         "dir": "swift", "name": "Swift", "title": "Swift", "package": "Noosh24", "registry": "SwiftPM",
-        "runtime": ("Swift", "6", "F05138", "swift"), "fence": "swift",
+        "runtime": ("Swift", "6.0+", "F05138", "swift"), "fence": "swift",
         "install": '.package(url: "https://github.com/noosh24/noosh24-swift.git", from: "0.1.0")', "server_only": True,
     },
 ]

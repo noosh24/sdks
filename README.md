@@ -7,7 +7,7 @@
 **Official clients for the [Noosh24 Open API](https://developer.noosh24.com).**<br>
 Connect delivery aggregators, accounting, loyalty, digital signage and BI to a Noosh24 restaurant in a few lines.
 
-<img src="https://img.shields.io/badge/Open%20API-1.1.0-DC4A38" alt="API 1.1.0"> <img src="https://img.shields.io/badge/SDKs-8%20languages-555555" alt="8 languages"> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT license"></a>
+<img src="https://img.shields.io/badge/Open%20API-1.1.0-DC4A38" alt="API 1.1.0"> <img src="https://img.shields.io/badge/SDKs-9%20languages-555555" alt="9 languages"> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT license"></a>
 
 [Developer site](https://developer.noosh24.com) · [API reference](https://developer.noosh24.com/reference) · [OpenAPI spec](spec/openapi.json) · [Report an issue](https://github.com/noosh24/sdks/issues)
 
@@ -25,6 +25,7 @@ Connect delivery aggregators, accounting, loyalty, digital signage and BI to a N
 | [Go](go) | `github.com/noosh24/noosh24-go` | Go modules | Go 1.26+ | [![CI](https://github.com/noosh24/sdks/actions/workflows/go.yml/badge.svg)](https://github.com/noosh24/sdks/actions/workflows/go.yml) |
 | [Ruby](ruby) | `noosh24` | RubyGems | Ruby 3.3+ | [![CI](https://github.com/noosh24/sdks/actions/workflows/ruby.yml/badge.svg)](https://github.com/noosh24/sdks/actions/workflows/ruby.yml) |
 | [Dart](dart) | `noosh24` | pub.dev | Dart 3.11+ | [![CI](https://github.com/noosh24/sdks/actions/workflows/dart.yml/badge.svg)](https://github.com/noosh24/sdks/actions/workflows/dart.yml) |
+| [Swift](swift) | `Noosh24` | SwiftPM | Swift 6.0+ | [![CI](https://github.com/noosh24/sdks/actions/workflows/swift.yml/badge.svg)](https://github.com/noosh24/sdks/actions/workflows/swift.yml) |
 
 ## Quick start
 
@@ -302,6 +303,36 @@ Future<void> main() async {
 More in the [Dart README](dart/README.md).
 
 </details>
+<details>
+<summary><b>Swift</b> · <code>.package(url: "https://github.com/noosh24/noosh24-swift.git", from: "0.1.0")</code></summary>
+
+```swift
+.package(url: "https://github.com/noosh24/noosh24-swift.git", from: "0.1.0")
+```
+
+```swift
+import Foundation
+import Noosh24
+
+let noosh = try Noosh24Client(apiKey: ProcessInfo.processInfo.environment["NOOSH24_API_KEY"] ?? "")
+
+let me = try await noosh.whoami()
+print(me.restaurant?.name ?? "", me.key?.scopes ?? [])
+
+let page = try await noosh.menu.listProducts(
+    limit: 50,
+    sort: "price desc",
+    where: try Where().eq("category", "Salads").eq("available", true)
+)
+for product in page {
+    print(product.name ?? "", product.price ?? 0)
+}
+print(page.total, "products match")
+```
+
+More in the [Swift README](swift/README.md).
+
+</details>
 
 > [!IMPORTANT]
 > **Keep the API key on your server.** A key belongs to one venue and opens its data: guests' phone numbers, payments, and writing reservations. Never put it in a browser, a mobile app or a public repository. Mobile and web apps call your own backend, and your backend uses an SDK.
@@ -345,6 +376,7 @@ java/      Java / Kotlin SDK
 go/        Go SDK
 ruby/      Ruby SDK
 dart/      Dart SDK
+swift/     Swift SDK
 spec/      openapi.json the SDKs are built against (API 1.1.0)
 tools/     model generators and this README generator
 ```

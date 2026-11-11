@@ -1,0 +1,14 @@
+{
+  "author": {
+    "name": "Noosh24",
+    "url": "https://noosh24.com"
+  },
+  "description": "Official Swift client for the Noosh24 Open API, for server-side Swift and internal tools.",
+  "licenseURL": "https://github.com/noosh24/noosh24-swift/blob/main/LICENSE",
+  "readmeURL": "https://github.com/noosh24/noosh24-swift/blob/main/README.md",
+  "repositoryURLs": [
+    "https://github.com/noosh24/noosh24-swift",
+    "https://github.com/noosh24/noosh24-swift.git",
+    "git@github.com:noosh24/noosh24-swift.git"
+  ]
+}
