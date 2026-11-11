@@ -268,13 +268,15 @@ jobs:
     needs: meta
     if: needs.meta.outputs.lang == 'cpp'
     runs-on: ubuntu-latest
+    container: gcc:latest
     permissions:
       contents: write
     steps:
+      - run: apt-get update -qq && apt-get install -y -qq cmake libcurl4-openssl-dev gh
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - run: sudo apt-get update -qq && sudo apt-get install -y -qq libcurl4-openssl-dev
+      - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - run: cmake -S cpp -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build -j && ctest --test-dir build --output-on-failure
       - run: git archive --format=tar.gz --prefix="noosh24-cpp-${{ needs.meta.outputs.version }}/" -o "noosh24-cpp-${{ needs.meta.outputs.version }}.tar.gz" "$GITHUB_REF_NAME:cpp"
       - run: tools/github-release.sh "$GITHUB_REF_NAME" "C++ SDK ${{ needs.meta.outputs.version }}" noosh24-cpp-*.tar.gz
