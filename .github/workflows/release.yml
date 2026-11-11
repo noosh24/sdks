@@ -239,15 +239,25 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
       - if: vars.PUBLISH_RUBYGEMS == 'true'
-        uses: rubygems/configure-rubygems-credentials@v2.1.0
-      - if: vars.PUBLISH_RUBYGEMS == 'true'
         run: |
           if curl -fsS "https://rubygems.org/api/v2/rubygems/noosh24/versions/${{ needs.meta.outputs.version }}.json" > /dev/null 2>&1; then
             echo "noosh24 ${{ needs.meta.outputs.version }} is already on RubyGems"
-          else
-            gem push noosh24-*.gem
+            exit 0
           fi
+          jwt=$(curl -fsS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=rubygems.org" | jq -r .value)
+          body=$(jq -n --arg jwt "$jwt" --arg owner "$RUBYGEMS_OWNER" '{jwt: $jwt} + (if $owner == "" then {} else {owner: $owner} end)')
+          response=$(curl -sS -w '\n%{http_code}' -X POST -H "Content-Type: application/json" -d "$body" https://rubygems.org/api/v1/oidc/trusted_publisher/exchange_token)
+          status=$(printf '%s' "$response" | tail -n 1)
+          if [ "$status" != "201" ]; then
+            echo "::error::RubyGems token exchange answered $status: $(printf '%s' "$response" | sed '$d')"
+            exit 1
+          fi
+          key=$(printf '%s' "$response" | sed '$d' | jq -r .rubygems_api_key)
+          echo "::add-mask::$key"
+          GEM_HOST_API_KEY="$key" gem push noosh24-*.gem
         working-directory: ruby
+        env:
+          RUBYGEMS_OWNER: ${{ vars.RUBYGEMS_OWNER }}
 
   dart:
     needs: meta
