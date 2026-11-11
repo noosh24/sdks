@@ -54,4 +54,8 @@ jobs:
           git push "git@github.com:$REPO.git" "$SHA:refs/heads/main" --force
           if [ -n "${TAG:-}" ]; then
             git push "git@github.com:$REPO.git" "$SHA:refs/tags/${TAG#"$PREFIX"/}" --force
+            if [ "$PREFIX" = go ]; then
+              sleep 10
+              curl -fsS "https://proxy.golang.org/github.com/noosh24/noosh24-go/@v/${TAG#go/}.info" || echo "::warning::proxy.golang.org has not picked up ${TAG#go/} yet"
+            fi
           fi

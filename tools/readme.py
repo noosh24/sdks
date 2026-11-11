@@ -270,7 +270,7 @@ def root(done):
             "",
             "## Versioning and releases",
             "",
-            "Each SDK has its own version and its own tag, `<folder>/v<version>` (for example `php/v0.1.0`). PHP, Go and Swift are mirrored to [noosh24-php](https://github.com/noosh24/noosh24-php), [noosh24-go](https://github.com/noosh24/noosh24-go) and [noosh24-swift](https://github.com/noosh24/noosh24-swift), because Packagist, Go modules and SwiftPM read a package from the repository root; open issues and pull requests here.",
+            "Each SDK has its own version and its own tag, `<folder>/v<version>` (for example `php/v0.1.0`). PHP, Go and Swift are mirrored to [noosh24-php](https://github.com/noosh24/noosh24-php), [noosh24-go](https://github.com/noosh24/noosh24-go) and [noosh24-swift](https://github.com/noosh24/noosh24-swift), because Packagist, Go modules and SwiftPM read a package from the repository root; open issues and pull requests here. [RELEASING.md](RELEASING.md) has the steps and the one-time registry setup.",
             "",
             "Every SDK supports the runtime versions its upstream still maintains and is tested on the oldest and the newest of them.",
             "",
