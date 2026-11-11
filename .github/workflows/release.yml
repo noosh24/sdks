@@ -31,8 +31,6 @@ jobs:
     needs: meta
     if: needs.meta.outputs.lang == 'php'
     runs-on: ubuntu-latest
-    env:
-      MIRROR_TOKEN: ${{ secrets.MIRROR_RELEASE_TOKEN }}
     permissions:
       contents: write
     steps:
@@ -48,12 +46,6 @@ jobs:
       - run: tools/github-release.sh "$GITHUB_REF_NAME" "PHP SDK ${{ needs.meta.outputs.version }}"
         env:
           GH_TOKEN: ${{ github.token }}
-      - if: env.MIRROR_TOKEN != ''
-        run: tools/mirror-release.sh "$GITHUB_REF_NAME" noosh24/noosh24-php "PHP SDK ${{ needs.meta.outputs.version }}"
-        env:
-          GH_TOKEN: ${{ secrets.MIRROR_RELEASE_TOKEN }}
-      - if: env.MIRROR_TOKEN == ''
-        run: echo "::warning::MIRROR_RELEASE_TOKEN is not set, no release created in noosh24/noosh24-php"
 
   node:
     needs: meta
@@ -179,8 +171,6 @@ jobs:
     needs: meta
     if: needs.meta.outputs.lang == 'go'
     runs-on: ubuntu-latest
-    env:
-      MIRROR_TOKEN: ${{ secrets.MIRROR_RELEASE_TOKEN }}
     permissions:
       contents: write
     steps:
@@ -196,12 +186,6 @@ jobs:
       - run: tools/github-release.sh "$GITHUB_REF_NAME" "Go SDK ${{ needs.meta.outputs.version }}"
         env:
           GH_TOKEN: ${{ github.token }}
-      - if: env.MIRROR_TOKEN != ''
-        run: tools/mirror-release.sh "$GITHUB_REF_NAME" noosh24/noosh24-go "Go SDK ${{ needs.meta.outputs.version }}"
-        env:
-          GH_TOKEN: ${{ secrets.MIRROR_RELEASE_TOKEN }}
-      - if: env.MIRROR_TOKEN == ''
-        run: echo "::warning::MIRROR_RELEASE_TOKEN is not set, no release created in noosh24/noosh24-go"
 
   ruby:
     needs: meta
@@ -301,8 +285,6 @@ jobs:
     needs: meta
     if: needs.meta.outputs.lang == 'swift'
     runs-on: ubuntu-latest
-    env:
-      MIRROR_TOKEN: ${{ secrets.MIRROR_RELEASE_TOKEN }}
     permissions:
       contents: write
     steps:
@@ -312,9 +294,34 @@ jobs:
       - run: tools/github-release.sh "$GITHUB_REF_NAME" "Swift SDK ${{ needs.meta.outputs.version }}"
         env:
           GH_TOKEN: ${{ github.token }}
+
+  mirror:
+    needs: [meta, php, node, python, dotnet, java, go, rust, cpp, ruby, dart, swift]
+    if: always() && needs.meta.result == 'success' && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
+    runs-on: ubuntu-latest
+    env:
+      MIRROR_TOKEN: ${{ secrets.MIRROR_RELEASE_TOKEN }}
+    steps:
+      - uses: actions/checkout@v7
+      - if: env.MIRROR_TOKEN == ''
+        run: echo "::warning::MIRROR_RELEASE_TOKEN is not set, no release created in noosh24/noosh24-${{ needs.meta.outputs.lang }}"
       - if: env.MIRROR_TOKEN != ''
-        run: tools/mirror-release.sh "$GITHUB_REF_NAME" noosh24/noosh24-swift "Swift SDK ${{ needs.meta.outputs.version }}"
         env:
           GH_TOKEN: ${{ secrets.MIRROR_RELEASE_TOKEN }}
-      - if: env.MIRROR_TOKEN == ''
-        run: echo "::warning::MIRROR_RELEASE_TOKEN is not set, no release created in noosh24/noosh24-swift"
+          LANG_DIR: ${{ needs.meta.outputs.lang }}
+          VERSION: ${{ needs.meta.outputs.version }}
+        run: |
+          case "$LANG_DIR" in
+            php) title="PHP SDK" ;;
+            node) title="Node.js SDK" ;;
+            python) title="Python SDK" ;;
+            dotnet) title=".NET SDK" ;;
+            java) title="Java SDK" ;;
+            go) title="Go SDK" ;;
+            rust) title="Rust SDK" ;;
+            cpp) title="C++ SDK" ;;
+            ruby) title="Ruby SDK" ;;
+            dart) title="Dart SDK" ;;
+            swift) title="Swift SDK" ;;
+          esac
+          tools/mirror-release.sh "$GITHUB_REF_NAME" "noosh24/noosh24-$LANG_DIR" "$title $VERSION"

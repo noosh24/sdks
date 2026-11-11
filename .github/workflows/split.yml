@@ -3,7 +3,7 @@ name: split
 on:
   push:
     branches: [main]
-    tags: ["php/v*", "go/v*", "swift/v*"]
+    tags: ["*/v*"]
 
 permissions:
   contents: read
@@ -22,9 +22,33 @@ jobs:
           - prefix: php
             repo: noosh24/noosh24-php
             key: PHP_MIRROR_KEY
+          - prefix: node
+            repo: noosh24/noosh24-node
+            key: NODE_MIRROR_KEY
+          - prefix: python
+            repo: noosh24/noosh24-python
+            key: PYTHON_MIRROR_KEY
+          - prefix: dotnet
+            repo: noosh24/noosh24-dotnet
+            key: DOTNET_MIRROR_KEY
+          - prefix: java
+            repo: noosh24/noosh24-java
+            key: JAVA_MIRROR_KEY
           - prefix: go
             repo: noosh24/noosh24-go
             key: GO_MIRROR_KEY
+          - prefix: rust
+            repo: noosh24/noosh24-rust
+            key: RUST_MIRROR_KEY
+          - prefix: cpp
+            repo: noosh24/noosh24-cpp
+            key: CPP_MIRROR_KEY
+          - prefix: ruby
+            repo: noosh24/noosh24-ruby
+            key: RUBY_MIRROR_KEY
+          - prefix: dart
+            repo: noosh24/noosh24-dart
+            key: DART_MIRROR_KEY
           - prefix: swift
             repo: noosh24/noosh24-swift
             key: SWIFT_MIRROR_KEY

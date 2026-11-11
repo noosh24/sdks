@@ -20,14 +20,14 @@ The tag starts [`.github/workflows/release.yml`](.github/workflows/release.yml):
 3. **GitHub Release.** A release named after the SDK and version is created with the commits that touched the folder since its previous tag, and the built package attached (`.tgz`, wheel and sdist, `.nupkg`, `.jar`, `.gem`, `.crate`, source tarball). A version with a `-` suffix is marked as a pre-release.
 4. **Registry.** The package is published, but only when the registry is switched on (below).
 
-PHP, Go and Swift have no upload step: [`split.yml`](.github/workflows/split.yml) pushes the folder and a plain `vX.Y.Z` tag to [noosh24-php](https://github.com/noosh24/noosh24-php), [noosh24-go](https://github.com/noosh24/noosh24-go) and [noosh24-swift](https://github.com/noosh24/noosh24-swift), which Packagist, the Go proxy and SwiftPM read.
+Every SDK also lives in its own read-only repository, `noosh24/noosh24-<folder>`: [`split.yml`](.github/workflows/split.yml) pushes the folder there on every push to `main` and turns `<folder>/vX.Y.Z` into a plain `vX.Y.Z` tag. PHP, Go and Swift have no upload step, because Packagist, the Go proxy and SwiftPM read those repositories.
 
-### Releases in the mirror repositories
+### Releases in the per-language repositories
 
-The PHP, Go and Swift jobs also create the same release in their mirror repository, so it shows on noosh24-php, noosh24-go and noosh24-swift too. The workflow's own token cannot write to other repositories, so this needs a fine-grained personal access token stored as the repository secret `MIRROR_RELEASE_TOKEN`:
+After the release here, the `mirror` job creates the same release in `noosh24/noosh24-<folder>`, so every SDK's own repository shows its releases. The workflow's own token cannot write to other repositories, so this uses a fine-grained personal access token stored as the repository secret `MIRROR_RELEASE_TOKEN`:
 
 - Resource owner: `noosh24`
-- Repository access: only `noosh24-php`, `noosh24-go` and `noosh24-swift`
+- Repository access: the `noosh24-*` repositories
 - Permissions: Contents → Read and write (Metadata read-only is added automatically)
 
 Without the secret the job only warns and the mirror gets the tag without a release.
