@@ -22,6 +22,16 @@ The tag starts [`.github/workflows/release.yml`](.github/workflows/release.yml):
 
 PHP, Go and Swift have no upload step: [`split.yml`](.github/workflows/split.yml) pushes the folder and a plain `vX.Y.Z` tag to [noosh24-php](https://github.com/noosh24/noosh24-php), [noosh24-go](https://github.com/noosh24/noosh24-go) and [noosh24-swift](https://github.com/noosh24/noosh24-swift), which Packagist, the Go proxy and SwiftPM read.
 
+### Releases in the mirror repositories
+
+The PHP, Go and Swift jobs also create the same release in their mirror repository, so it shows on noosh24-php, noosh24-go and noosh24-swift too. The workflow's own token cannot write to other repositories, so this needs a fine-grained personal access token stored as the repository secret `MIRROR_RELEASE_TOKEN`:
+
+- Resource owner: `noosh24`
+- Repository access: only `noosh24-php`, `noosh24-go` and `noosh24-swift`
+- Permissions: Contents → Read and write (Metadata read-only is added automatically)
+
+Without the secret the job only warns and the mirror gets the tag without a release.
+
 ## Switching a registry on
 
 Publishing uses short-lived OIDC tokens from GitHub ("trusted publishing") wherever the registry supports it, so no long-lived registry token is stored in the repository. Each registry needs a one-time setup by an owner of the Noosh24 account there; after that, set the repository variable in **Settings → Secrets and variables → Actions → Variables**.
