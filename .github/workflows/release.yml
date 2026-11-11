@@ -353,8 +353,6 @@ jobs:
       MIRROR_TOKEN: ${{ secrets.MIRROR_RELEASE_TOKEN }}
     steps:
       - uses: actions/checkout@v7
-        with:
-          ref: ${{ env.TAG }}
       - if: env.MIRROR_TOKEN == ''
         run: echo "::warning::MIRROR_RELEASE_TOKEN is not set, no release created in noosh24/noosh24-${{ needs.meta.outputs.lang }}"
       - if: env.MIRROR_TOKEN != ''
