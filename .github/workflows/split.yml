@@ -39,6 +39,7 @@ jobs:
           REPO: ${{ matrix.repo }}
         run: |
           if [ ! -d "$PREFIX" ]; then exit 0; fi
+          if [ -z "$DEPLOY_KEY" ]; then echo "::warning::${{ matrix.key }} is not set, $REPO not updated"; exit 0; fi
           case "$GITHUB_REF" in
             refs/tags/*) TAG="${GITHUB_REF#refs/tags/}"; case "$TAG" in "$PREFIX"/*) ;; *) exit 0 ;; esac ;;
           esac
