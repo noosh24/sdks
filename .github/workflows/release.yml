@@ -92,7 +92,12 @@ jobs:
             exit 0
           fi
           npm install -g npm@latest > /dev/null
-          if ! out=$(npm stage publish --provenance --access public $([[ "$TAG" == *-* ]] && echo --tag next) 2>&1); then
+          tag_flag=$([[ "$TAG" == *-* ]] && echo --tag next || true)
+          if [ "${{ vars.NPM_STAGE }}" != "true" ]; then
+            npm publish --provenance --access public $tag_flag
+            exit 0
+          fi
+          if ! out=$(npm stage publish --provenance --access public $tag_flag 2>&1); then
             echo "$out"
             if echo "$out" | grep -qi -E "already (staged|exists)|cannot publish over"; then
               echo "::warning::@noosh24/open-api@${{ needs.meta.outputs.version }} is already staged"
