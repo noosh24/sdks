@@ -157,6 +157,8 @@ A key gets 600 requests a minute. On `429` and `502`/`503`/`504` the client wait
 
 ## Development
 
+Building needs Node.js 22.18 or newer (tsdown); the published package runs on any Node.js 22+.
+
 ```bash
 npm install
 npm test

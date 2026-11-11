@@ -1,0 +1,56 @@
+name: split
+
+on:
+  push:
+    branches: [main]
+    tags: ["php/v*", "go/v*", "swift/v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: split-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  split:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - prefix: php
+            repo: noosh24/noosh24-php
+            key: PHP_MIRROR_KEY
+          - prefix: go
+            repo: noosh24/noosh24-go
+            key: GO_MIRROR_KEY
+          - prefix: swift
+            repo: noosh24/noosh24-swift
+            key: SWIFT_MIRROR_KEY
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Split and push
+        env:
+          DEPLOY_KEY: ${{ secrets[matrix.key] }}
+          PREFIX: ${{ matrix.prefix }}
+          REPO: ${{ matrix.repo }}
+        run: |
+          if [ ! -d "$PREFIX" ]; then exit 0; fi
+          case "$GITHUB_REF" in
+            refs/tags/*) TAG="${GITHUB_REF#refs/tags/}"; case "$TAG" in "$PREFIX"/*) ;; *) exit 0 ;; esac ;;
+          esac
+          mkdir -p ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/mirror
+          chmod 600 ~/.ssh/mirror
+          ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null
+          export GIT_SSH_COMMAND="ssh -i ~/.ssh/mirror -o IdentitiesOnly=yes"
+          git config user.name "noosh24-bot"
+          git config user.email "noosh24-bot@users.noreply.github.com"
+          SHA=$(git subtree split --prefix="$PREFIX" HEAD)
+          git push "git@github.com:$REPO.git" "$SHA:refs/heads/main" --force
+          if [ -n "${TAG:-}" ]; then
+            git push "git@github.com:$REPO.git" "$SHA:refs/tags/${TAG#"$PREFIX"/}" --force
+          fi
