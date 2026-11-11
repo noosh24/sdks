@@ -93,11 +93,11 @@ publishing {
 }
 
 signing {
-    val signingKey = providers.environmentVariable("SIGNING_KEY").orNull
-    val signingPassword = providers.environmentVariable("SIGNING_PASSWORD").orNull
+    val signingKey = providers.environmentVariable("SIGNING_KEY").orNull?.takeIf { it.isNotBlank() }
+    val signingPassword = providers.environmentVariable("SIGNING_PASSWORD").orNull?.takeIf { it.isNotBlank() }
     if (signingKey != null) {
         useInMemoryPgpKeys(signingKey, signingPassword)
     }
-    setRequired { gradle.taskGraph.allTasks.any { it is PublishToMavenRepository } }
+    setRequired { signingKey != null && gradle.taskGraph.allTasks.any { it is PublishToMavenRepository } }
     sign(publishing.publications["maven"])
 }

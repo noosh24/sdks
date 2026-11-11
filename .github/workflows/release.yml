@@ -226,7 +226,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
       - if: vars.PUBLISH_RUBYGEMS == 'true'
-        uses: rubygems/configure-rubygems-credentials@v2
+        uses: rubygems/configure-rubygems-credentials@v2.1.0
       - if: vars.PUBLISH_RUBYGEMS == 'true'
         run: gem push noosh24-*.gem
         working-directory: ruby
