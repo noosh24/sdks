@@ -91,8 +91,8 @@ def header():
     for name, _, spec in MODELS:
         lines.append("struct %s {" % name)
         for fname, kind, _, _ in parse(spec):
-            lines.append("    %s %s;" % (cpp_type(kind), member(fname)))
-        lines.append("    nlohmann::json raw;")
+            lines.append("    %s %s{};" % (cpp_type(kind), member(fname)))
+        lines.append("    nlohmann::json raw{};")
         lines.append("")
         lines.append("    [[nodiscard]] static %s from_json(const nlohmann::json& data);" % name)
         lines.append("};")

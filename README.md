@@ -7,7 +7,7 @@
 **Official clients for the [Noosh24 Open API](https://developer.noosh24.com).**<br>
 Connect delivery aggregators, accounting, loyalty, digital signage and BI to a Noosh24 restaurant in a few lines.
 
-<img src="https://img.shields.io/badge/Open%20API-1.1.0-DC4A38" alt="API 1.1.0"> <img src="https://img.shields.io/badge/SDKs-10%20languages-555555" alt="10 languages"> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT license"></a>
+<img src="https://img.shields.io/badge/Open%20API-1.1.0-DC4A38" alt="API 1.1.0"> <img src="https://img.shields.io/badge/SDKs-11%20languages-555555" alt="11 languages"> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT license"></a>
 
 [Developer site](https://developer.noosh24.com) · [API reference](https://developer.noosh24.com/reference) · [OpenAPI spec](spec/openapi.json) · [Report an issue](https://github.com/noosh24/sdks/issues)
 
@@ -24,6 +24,7 @@ Connect delivery aggregators, accounting, loyalty, digital signage and BI to a N
 | [Java / Kotlin](java) | `com.noosh24:noosh24-open-api` | Maven Central | Java 21+ | [![CI](https://github.com/noosh24/sdks/actions/workflows/java.yml/badge.svg)](https://github.com/noosh24/sdks/actions/workflows/java.yml) |
 | [Go](go) | `github.com/noosh24/noosh24-go` | Go modules | Go 1.26+ | [![CI](https://github.com/noosh24/sdks/actions/workflows/go.yml/badge.svg)](https://github.com/noosh24/sdks/actions/workflows/go.yml) |
 | [Rust](rust) | `noosh24` | crates.io | Rust 1.88+ | [![CI](https://github.com/noosh24/sdks/actions/workflows/rust.yml/badge.svg)](https://github.com/noosh24/sdks/actions/workflows/rust.yml) |
+| [C++](cpp) | `noosh24` | CMake | C++ 20 | [![CI](https://github.com/noosh24/sdks/actions/workflows/cpp.yml/badge.svg)](https://github.com/noosh24/sdks/actions/workflows/cpp.yml) |
 | [Ruby](ruby) | `noosh24` | RubyGems | Ruby 3.3+ | [![CI](https://github.com/noosh24/sdks/actions/workflows/ruby.yml/badge.svg)](https://github.com/noosh24/sdks/actions/workflows/ruby.yml) |
 | [Dart](dart) | `noosh24` | pub.dev | Dart 3.11+ | [![CI](https://github.com/noosh24/sdks/actions/workflows/dart.yml/badge.svg)](https://github.com/noosh24/sdks/actions/workflows/dart.yml) |
 | [Swift](swift) | `Noosh24` | SwiftPM | Swift 6.0+ | [![CI](https://github.com/noosh24/sdks/actions/workflows/swift.yml/badge.svg)](https://github.com/noosh24/sdks/actions/workflows/swift.yml) |
@@ -280,6 +281,41 @@ More in the [Rust README](rust/README.md).
 
 </details>
 <details>
+<summary><b>C++</b> · <code>FetchContent_Declare(noosh24 GIT_REPOSITORY https://github.com/noosh24/sdks.git GIT_TAG cpp/v0.1.0 SOURCE_SUBDIR cpp)</code></summary>
+
+```cmake
+FetchContent_Declare(noosh24 GIT_REPOSITORY https://github.com/noosh24/sdks.git GIT_TAG cpp/v0.1.0 SOURCE_SUBDIR cpp)
+```
+
+```cpp
+#include <cstdlib>
+#include <iostream>
+
+#include <noosh24/noosh24.hpp>
+
+int main()
+{
+    noosh24::Client noosh{std::getenv("NOOSH24_API_KEY")};
+
+    auto me = noosh.whoami();
+    std::cout << me.restaurant->name.value_or("") << "\n";
+
+    auto page = noosh.menu().list_products({
+        .limit = 50,
+        .sort = {"price desc"},
+        .where = noosh24::where().eq("category", "Salads").eq("available", true),
+    });
+    for (const auto& product : page) {
+        std::cout << product.name.value_or("") << " " << product.price.value_or(0) << "\n";
+    }
+    std::cout << page.total << " products match\n";
+}
+```
+
+More in the [C++ README](cpp/README.md).
+
+</details>
+<details>
 <summary><b>Ruby</b> · <code>gem install noosh24</code></summary>
 
 ```bash
@@ -413,6 +449,7 @@ dotnet/    C# / .NET SDK
 java/      Java / Kotlin SDK
 go/        Go SDK
 rust/      Rust SDK
+cpp/       C++ SDK
 ruby/      Ruby SDK
 dart/      Dart SDK
 swift/     Swift SDK

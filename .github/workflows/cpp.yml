@@ -1,0 +1,43 @@
+name: cpp
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["cpp/**", ".github/workflows/cpp.yml"]
+  pull_request:
+    paths: ["cpp/**", ".github/workflows/cpp.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - gcc: "14"
+            std: "20"
+          - gcc: "latest"
+            std: "20"
+          - gcc: "latest"
+            std: "23"
+    container: gcc:${{ matrix.gcc }}
+    steps:
+      - uses: actions/checkout@v7
+      - run: apt-get update -qq && apt-get install -y -qq cmake libcurl4-openssl-dev
+      - run: cmake -S cpp -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=${{ matrix.std }}
+      - run: cmake --build build -j
+      - run: ctest --test-dir build --output-on-failure
+      - run: cmake --install build --prefix /tmp/noosh24
+      - run: cmake -S cpp/tests/install -B build-consumer -DCMAKE_PREFIX_PATH=/tmp/noosh24 && cmake --build build-consumer
+
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: cmake -S cpp -B build -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build -j
+      - run: ctest --test-dir build --output-on-failure
