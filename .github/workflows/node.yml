@@ -1,6 +1,7 @@
 name: node
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     paths: ["node/**", ".github/workflows/node.yml"]

@@ -1,6 +1,7 @@
 name: php
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     paths: ["php/**", ".github/workflows/php.yml"]
