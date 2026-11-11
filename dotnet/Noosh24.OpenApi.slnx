@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Noosh24.OpenApi/Noosh24.OpenApi.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Noosh24.OpenApi.Tests/Noosh24.OpenApi.Tests.csproj" />
+  </Folder>
+</Solution>

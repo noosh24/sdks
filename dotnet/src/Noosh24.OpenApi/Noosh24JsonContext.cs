@@ -1,0 +1,45 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace Noosh24.OpenApi;
+
+[JsonSerializable(typeof(Restaurant))]
+[JsonSerializable(typeof(ApiKeyInfo))]
+[JsonSerializable(typeof(Subscription))]
+[JsonSerializable(typeof(Features))]
+[JsonSerializable(typeof(Whoami))]
+[JsonSerializable(typeof(Category))]
+[JsonSerializable(typeof(Modifier))]
+[JsonSerializable(typeof(ModifierGroup))]
+[JsonSerializable(typeof(ProductTranslation))]
+[JsonSerializable(typeof(Product))]
+[JsonSerializable(typeof(StopListItem))]
+[JsonSerializable(typeof(ReservationGuest))]
+[JsonSerializable(typeof(ReservationTable))]
+[JsonSerializable(typeof(ReservationPreOrderItem))]
+[JsonSerializable(typeof(Reservation))]
+[JsonSerializable(typeof(AvailableTable))]
+[JsonSerializable(typeof(TableAvailability))]
+[JsonSerializable(typeof(OrderItem))]
+[JsonSerializable(typeof(DeliveryPlatform))]
+[JsonSerializable(typeof(OrderDelivery))]
+[JsonSerializable(typeof(Order))]
+[JsonSerializable(typeof(Bill))]
+[JsonSerializable(typeof(PaymentCard))]
+[JsonSerializable(typeof(PaymentPlatform))]
+[JsonSerializable(typeof(Payment))]
+[JsonSerializable(typeof(Hall))]
+[JsonSerializable(typeof(Table))]
+[JsonSerializable(typeof(Customer))]
+[JsonSerializable(typeof(LoyaltyProgram))]
+[JsonSerializable(typeof(LoyaltyCard))]
+[JsonSerializable(typeof(Ingredient))]
+[JsonSerializable(typeof(StockStore))]
+[JsonSerializable(typeof(StockMove))]
+[JsonSerializable(typeof(ReviewRatings))]
+[JsonSerializable(typeof(Review))]
+[JsonSerializable(typeof(NewReservation))]
+[JsonSerializable(typeof(Dictionary<string, JsonElement>))]
+internal sealed partial class Noosh24JsonContext : JsonSerializerContext
+{
+}

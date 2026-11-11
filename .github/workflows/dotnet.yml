@@ -1,0 +1,33 @@
+name: dotnet
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["dotnet/**", ".github/workflows/dotnet.yml"]
+  pull_request:
+    paths: ["dotnet/**", ".github/workflows/dotnet.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        sdk: ["10.0.x", "11.0.x"]
+    defaults:
+      run:
+        working-directory: dotnet
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: |
+            10.0.x
+            ${{ matrix.sdk }}
+      - run: dotnet --info | head -20
+      - run: dotnet test -c Release
+      - run: dotnet pack src/Noosh24.OpenApi -c Release -o artifacts

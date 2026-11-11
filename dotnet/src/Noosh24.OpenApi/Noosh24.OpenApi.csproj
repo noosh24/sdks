@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net10.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(NETCoreSdkVersion)' != '' and $([MSBuild]::VersionGreaterThanOrEquals('$(NETCoreSdkVersion)', '11.0'))">net10.0;net11.0</TargetFrameworks>
+    <RootNamespace>Noosh24.OpenApi</RootNamespace>
+    <AssemblyName>Noosh24.OpenApi</AssemblyName>
+    <IsAotCompatible>true</IsAotCompatible>
+    <IsTrimmable>true</IsTrimmable>
+    <Version>0.1.0</Version>
+    <PackageId>Noosh24.OpenApi</PackageId>
+    <Title>Noosh24 Open API</Title>
+    <Description>Official .NET client for the Noosh24 Open API: menu, reservations, orders, payments, tables, customers, loyalty, stock and reviews of a venue.</Description>
+    <Authors>Noosh24</Authors>
+    <Company>Noosh24</Company>
+    <Copyright>Copyright (c) 2026 Noosh24</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://developer.noosh24.com</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/noosh24/sdks</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>noosh24;restaurant;pos;open-api;sdk;azerbaijan</PackageTags>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EnablePackageValidation>true</EnablePackageValidation>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <InternalsVisibleTo Include="Noosh24.OpenApi.Tests" />
+  </ItemGroup>
+
+</Project>

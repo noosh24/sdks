@@ -4,6 +4,14 @@
   "description": "Official Node.js and TypeScript client for the Noosh24 Open API",
   "license": "MIT",
   "homepage": "https://developer.noosh24.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noosh24/sdks.git",
+    "directory": "node"
+  },
+  "bugs": {
+    "url": "https://github.com/noosh24/sdks/issues"
+  },
   "keywords": [
     "noosh24",
     "restaurant",

@@ -1,0 +1,33 @@
+name: dart
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["dart/**", ".github/workflows/dart.yml"]
+  pull_request:
+    paths: ["dart/**", ".github/workflows/dart.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        dart: ["3.11.6", "stable"]
+    defaults:
+      run:
+        working-directory: dart
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ matrix.dart }}
+      - run: dart pub get
+      - run: dart format --output=none --set-exit-if-changed .
+      - run: dart analyze --fatal-infos
+      - run: dart test
+      - run: dart pub publish --dry-run

@@ -1,10 +1,27 @@
+<div align="center">
+
+<a href="https://developer.noosh24.com"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/noosh24/sdks/main/.github/assets/noosh-lockup-on-dark.png"><img src="https://raw.githubusercontent.com/noosh24/sdks/main/.github/assets/noosh-lockup-on-light.png" alt="Noosh24" width="260"></picture></a>
+
 # Noosh24 Open API for Python
 
-Official Python client for the [Noosh24 Open API](https://developer.noosh24.com): read a venue's menu, reservations, orders, payments, tables, customers, loyalty, stock and reviews, and create or cancel reservations.
+**The official Python client for the [Noosh24 Open API](https://developer.noosh24.com).**<br>
+Menu, reservations, orders and bills, payments and the Z-report, tables, customers, loyalty, stock and reviews of a Noosh24 venue, plus creating and cancelling reservations.
+
+<a href="https://github.com/noosh24/sdks/actions/workflows/python.yml"><img src="https://github.com/noosh24/sdks/actions/workflows/python.yml/badge.svg" alt="CI"></a> <img src="https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white" alt="Python 3.11+"> <img src="https://img.shields.io/badge/PyPI-noosh24-DC4A38" alt="PyPI"> <a href="https://github.com/noosh24/sdks/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT license"></a>
+
+[Developer site](https://developer.noosh24.com) · [API reference](https://developer.noosh24.com/reference) · [All SDKs](https://github.com/noosh24/sdks) · [Report an issue](https://github.com/noosh24/sdks/issues)
+
+</div>
+
+> [!IMPORTANT]
+> **Keep the API key on your server.** A key belongs to one venue and opens its data: guests' phone numbers, payments, and writing reservations. Never put it in a browser, a mobile app or a public repository.
+
+**Contents:** [Requirements](#requirements) · [Install](#install) · [Quick start](#quick-start) · [Options](#options) · [Resources](#resources) · [Lists, filters and pages](#lists-filters-and-pages) · [Reservations](#reservations) · [Errors](#errors) · [Retries and rate limits](#retries-and-rate-limits) · [Development](#development) · [License](#license)
+
+## Requirements
 
 - Python 3.11 or newer (tested on 3.11 to 3.15). One dependency: `httpx`.
 - Typed dataclasses for every response (`py.typed` included).
-- API reference: https://developer.noosh24.com/reference
 
 ## Install
 

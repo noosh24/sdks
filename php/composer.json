@@ -13,7 +13,9 @@
     ],
     "homepage": "https://developer.noosh24.com",
     "support": {
-        "docs": "https://developer.noosh24.com/reference"
+        "docs": "https://developer.noosh24.com/reference",
+        "issues": "https://github.com/noosh24/sdks/issues",
+        "source": "https://github.com/noosh24/sdks/tree/main/php"
     },
     "require": {
         "php": ">=8.2",

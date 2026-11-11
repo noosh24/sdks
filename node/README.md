@@ -1,10 +1,27 @@
-# Noosh24 Open API for Node.js
+<div align="center">
 
-Official Node.js and TypeScript client for the [Noosh24 Open API](https://developer.noosh24.com): read a venue's menu, reservations, orders, payments, tables, customers, loyalty, stock and reviews, and create or cancel reservations.
+<a href="https://developer.noosh24.com"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/noosh24/sdks/main/.github/assets/noosh-lockup-on-dark.png"><img src="https://raw.githubusercontent.com/noosh24/sdks/main/.github/assets/noosh-lockup-on-light.png" alt="Noosh24" width="260"></picture></a>
+
+# Noosh24 Open API for Node.js and TypeScript
+
+**The official Node.js and TypeScript client for the [Noosh24 Open API](https://developer.noosh24.com).**<br>
+Menu, reservations, orders and bills, payments and the Z-report, tables, customers, loyalty, stock and reviews of a Noosh24 venue, plus creating and cancelling reservations.
+
+<a href="https://github.com/noosh24/sdks/actions/workflows/node.yml"><img src="https://github.com/noosh24/sdks/actions/workflows/node.yml/badge.svg" alt="CI"></a> <img src="https://img.shields.io/badge/Node.js-22%2B-5FA04E?logo=nodedotjs&logoColor=white" alt="Node.js 22+"> <img src="https://img.shields.io/badge/npm-%40noosh24%2Fopen--api-DC4A38" alt="npm"> <a href="https://github.com/noosh24/sdks/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT license"></a>
+
+[Developer site](https://developer.noosh24.com) · [API reference](https://developer.noosh24.com/reference) · [All SDKs](https://github.com/noosh24/sdks) · [Report an issue](https://github.com/noosh24/sdks/issues)
+
+</div>
+
+> [!IMPORTANT]
+> **Keep the API key on your server.** A key belongs to one venue and opens its data: guests' phone numbers, payments, and writing reservations. Never put it in a browser, a mobile app or a public repository.
+
+**Contents:** [Requirements](#requirements) · [Install](#install) · [Quick start](#quick-start) · [Options](#options) · [Resources](#resources) · [Lists, filters and pages](#lists-filters-and-pages) · [Reservations](#reservations) · [Errors](#errors) · [Retries and rate limits](#retries-and-rate-limits) · [Development](#development) · [License](#license)
+
+## Requirements
 
 - Node.js 22 or newer (tested on 22, 24 and 26; uses the built-in `fetch`). No runtime dependencies.
 - ESM and CommonJS, with TypeScript types for every response.
-- API reference: https://developer.noosh24.com/reference
 
 ## Install
 

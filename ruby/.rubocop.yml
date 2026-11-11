@@ -1,0 +1,70 @@
+plugins:
+  - rubocop-minitest
+  - rubocop-rake
+
+AllCops:
+  TargetRubyVersion: 3.3
+  NewCops: enable
+  SuggestExtensions: false
+  Exclude:
+    - "vendor/**/*"
+    - "pkg/**/*"
+
+Style/Documentation:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Layout/LineLength:
+  Max: 120
+
+Naming/PredicatePrefix:
+  AllowedMethods:
+    - has_more?
+
+Naming/AccessorMethodName:
+  Exclude:
+    - "lib/noosh24/resources.rb"
+
+Lint/DataDefineOverride:
+  Exclude:
+    - "lib/noosh24/models.rb"
+
+Metrics/ClassLength:
+  Max: 150
+  Exclude:
+    - "test/**/*"
+
+Metrics/ModuleLength:
+  Exclude:
+    - "lib/noosh24/models.rb"
+
+Metrics/MethodLength:
+  Max: 20
+  Exclude:
+    - "lib/noosh24/models.rb"
+    - "test/**/*"
+
+Metrics/AbcSize:
+  Max: 30
+  Exclude:
+    - "lib/noosh24/models.rb"
+    - "test/**/*"
+
+Metrics/CyclomaticComplexity:
+  Max: 12
+
+Metrics/PerceivedComplexity:
+  Max: 12
+
+Metrics/ParameterLists:
+  CountKeywordArgs: false
+
+Metrics/BlockLength:
+  Exclude:
+    - "lib/noosh24/models.rb"
+    - "noosh24.gemspec"
+
+Minitest/MultipleAssertions:
+  Enabled: false
