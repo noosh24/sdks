@@ -1,0 +1,174 @@
+# Noosh24 Open API for Python
+
+Official Python client for the [Noosh24 Open API](https://developer.noosh24.com): read a venue's menu, reservations, orders, payments, tables, customers, loyalty, stock and reviews, and create or cancel reservations.
+
+- Python 3.8 or newer. One dependency: `httpx`.
+- Typed dataclasses for every response (`py.typed` included).
+- API reference: https://developer.noosh24.com/reference
+
+## Install
+
+```bash
+pip install noosh24
+```
+
+## Quick start
+
+```python
+import os
+
+from noosh24 import Noosh24, where
+
+noosh = Noosh24(os.environ["NOOSH24_API_KEY"])
+
+me = noosh.whoami()
+print(me.restaurant.name, me.key.scopes)
+
+page = noosh.menu.list_products(
+    where=where().eq("category", "Salads").eq("available", True),
+    sort="price desc",
+    limit=50,
+)
+for product in page:
+    print(product.name, product.price)
+print(page.total, "products match")
+```
+
+The key belongs to one venue, so there is no venue parameter anywhere. Keys are issued in the Noosh24 panel; keep them on your server, never in a browser or a mobile app.
+
+## Options
+
+```python
+noosh = Noosh24(
+    "nsk_...",
+    base_url="https://open-api.noosh24.com/v1",
+    timeout=30.0,
+    max_retries=2,
+    user_agent="acme-pos/2.1",
+)
+```
+
+`timeout` is in seconds. `http_client` takes your own `httpx.Client` (proxies, custom TLS, tests). Use the client as a context manager, or call `close()`, to release connections:
+
+```python
+with Noosh24("nsk_...") as noosh:
+    print(noosh.whoami().restaurant.name)
+```
+
+## Resources
+
+| Group | Methods |
+| --- | --- |
+| `whoami()` | the venue, the key's scopes and the venue's modules |
+| `menu` | `list_categories()`, `list_products()`, `iterate_products()`, `get_product(id, expand=)`, `get_stop_list()` |
+| `reservations` | `list()`, `iterate()`, `get(id)`, `availability(date, time, guests=)`, `create(...)`, `cancel(id)` |
+| `orders` | `list()`, `iterate()`, `get(id)`, `list_bills()`, `iterate_bills()`, `get_bill(id)` |
+| `payments` | `list()`, `iterate()`, `get(id)`, `z_report(date=)` |
+| `tables` | `list()`, `list_halls()` |
+| `customers` | `list()`, `iterate()`, `get(id)` |
+| `loyalty` | `get_program()`, `list_cards()`, `iterate_cards()` |
+| `stock` | `list_ingredients()`, `iterate_ingredients()`, `list_moves()`, `iterate_moves()`, `list_stores()` |
+| `reviews` | `list()`, `iterate()` |
+
+Responses are frozen dataclasses (`Product`, `Reservation`, `Order`, ...) with snake_case attributes: `product.prep_minutes`, `reservation.starts_at`. Timestamps are timezone-aware `datetime` objects in UTC, money is `float` in AZN. `model.raw` holds the JSON as the API sent it, including fields this version of the SDK does not know yet.
+
+## Lists, filters and pages
+
+List methods take `limit`, `offset`, `sort`, `where` and, for products, `expand`. They return a `Page` with `items`, `total`, `limit`, `offset`, `has_more` and `next_offset`; a page is iterable.
+
+```python
+orders = noosh.orders.list(
+    where="status = 'served' AND createdAt >= '2026-11-01'",
+    sort=["createdAt desc"],
+    limit=100,
+)
+```
+
+`where` is AND only, and field names are the API's camelCase names. Build it with `where()` so strings and dates are quoted correctly:
+
+```python
+from datetime import date, datetime, timedelta, timezone
+
+baku = timezone(timedelta(hours=4))
+condition = (
+    where()
+    .eq("status", "confirmed")
+    .gte("startsAt", datetime(2026, 11, 20, tzinfo=baku))
+    .in_("zone", ["Terrace", "Chef's table"])
+)
+```
+
+The `iterate*()` methods walk every page and fetch the next page only when you reach it:
+
+```python
+for payment in noosh.payments.iterate(where="createdAt >= '2026-11-01'"):
+    ...
+```
+
+`offset` stops at 10000. For bigger exports, narrow `where` by date and walk one window at a time.
+
+## Reservations
+
+```python
+from noosh24 import PreOrderLine, TableTakenError
+
+free = noosh.reservations.availability("2026-11-20", "19:30", guests=4)
+
+try:
+    result = noosh.reservations.create(
+        date="2026-11-20",
+        time="19:30",
+        guests=4,
+        guest_name="Aysel Məmmədova",
+        phone="+994501234567",
+        table_id=free.tables[0].id,
+        pre_order=[PreOrderLine(item_id="0b6f3c1e", qty=2)],
+        external_ref="acme-booking-991",
+    )
+except TableTakenError:
+    ...
+
+print(result.reservation.code, "created" if result.created else "already existed")
+noosh.reservations.cancel(result.reservation.id)
+```
+
+A booking lands as `pending` and the venue confirms it. Always send `external_ref` (your own booking id): sending the same `external_ref` again returns the booking that already exists instead of making a second one, so a create is safe to retry. The client retries a create only when it carries an `external_ref`. You can cancel only bookings your key created.
+
+## Errors
+
+Every API error is a subclass of `APIError` with `status`, `code` (the API's `error` field), `message` and `headers`. Branch on the class or on `code`, not on the message.
+
+| `code` | Exception | Parent |
+| --- | --- | --- |
+| `validation_error` | `ValidationError` | `APIError` |
+| `no_api_key` | `NoApiKeyError` | `AuthenticationError` |
+| `invalid_api_key` | `InvalidApiKeyError` | `AuthenticationError` |
+| `insufficient_scope` | `InsufficientScopeError` | `PermissionDeniedError` |
+| `module_not_enabled` | `ModuleNotEnabledError` | `PermissionDeniedError` |
+| `venue_suspended` | `VenueSuspendedError` | `PermissionDeniedError` |
+| `not_your_reservation` | `NotYourReservationError` | `PermissionDeniedError` |
+| `not_found` | `NotFoundError` | `APIError` |
+| `table_not_found` | `TableNotFoundError` | `NotFoundError` |
+| `table_taken` | `TableTakenError` | `ConflictError` |
+| `cannot_cancel` | `CannotCancelError` | `ConflictError` |
+| `outside_hours`, `in_the_past`, `table_too_small` | `OutsideHoursError`, `InThePastError`, `TableTooSmallError` | `UnprocessableError` |
+| `rate_limit_exceeded` | `RateLimitError` (`retry_after`) | `APIError` |
+| `temporarily_unavailable` | `TemporarilyUnavailableError` | `ServerError` |
+
+A network failure raises `APIConnectionError`; a timeout raises `APITimeoutError`. All of them extend `Noosh24Error`.
+
+## Retries and rate limits
+
+A key gets 600 requests a minute. On `429` and `502`/`503`/`504` the client waits (`Retry-After` when the API sends it, otherwise 0.5 s, 1 s, 2 s ...) and tries again, up to `max_retries` times. It never waits more than 60 seconds; a longer `Retry-After` is raised to you as a `RateLimitError`. Reads, cancels and creates with an `external_ref` are retried; a create without an `external_ref` is not.
+
+## Development
+
+```bash
+python -m venv .venv
+.venv/bin/pip install -e '.[dev]'
+.venv/bin/pytest
+```
+
+## License
+
+MIT

@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling>=1.18"]
+build-backend = "hatchling.build"
+
+[project]
+name = "noosh24"
+dynamic = ["version"]
+description = "Official Python client for the Noosh24 Open API"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.8"
+keywords = ["noosh24", "restaurant", "pos", "open-api", "sdk", "azerbaijan"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Operating System :: OS Independent",
+    "Typing :: Typed",
+    "Intended Audience :: Developers",
+]
+dependencies = ["httpx>=0.23,<1"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.urls]
+Homepage = "https://developer.noosh24.com"
+Documentation = "https://developer.noosh24.com/reference"
+
+[tool.hatch.version]
+path = "src/noosh24/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/noosh24"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
