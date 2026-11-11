@@ -38,7 +38,7 @@ LANGS = [
     },
     {
         "dir": "rust", "name": "Rust", "title": "Rust", "package": "noosh24", "registry": "crates.io",
-        "runtime": ("Rust", "stable", "000000", "rust"), "fence": "bash", "install": "cargo add noosh24",
+        "runtime": ("Rust", "1.88+", "000000", "rust"), "fence": "bash", "install": "cargo add noosh24",
     },
     {
         "dir": "cpp", "name": "C++", "title": "C++", "package": "noosh24", "registry": "CMake",

@@ -1,0 +1,28 @@
+[package]
+name = "noosh24"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+description = "Official Rust client for the Noosh24 Open API"
+license = "MIT"
+readme = "README.md"
+homepage = "https://developer.noosh24.com"
+repository = "https://github.com/noosh24/sdks"
+documentation = "https://docs.rs/noosh24"
+keywords = ["noosh24", "restaurant", "pos", "sdk", "azerbaijan"]
+categories = ["api-bindings", "web-programming::http-client"]
+include = ["src/**/*.rs", "tests/**/*.rs", "examples/**/*.rs", "Cargo.toml", "rustfmt.toml", "README.md", "LICENSE"]
+
+[dependencies]
+chrono = { version = "0.4.45", default-features = false, features = ["std", "serde"] }
+futures = { version = "0.3.34", default-features = false, features = ["std"] }
+percent-encoding = "2.3.2"
+reqwest = { version = "0.13.5", default-features = false, features = ["rustls", "http2"] }
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
+thiserror = "2.0.21"
+tokio = { version = "1.54.1", features = ["time"] }
+
+[dev-dependencies]
+tokio = { version = "1.54.1", features = ["macros", "rt-multi-thread", "net", "io-util"] }
+wiremock = "0.6.5"
