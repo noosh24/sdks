@@ -1,6 +1,6 @@
 <div align="center">
 
-<a href="https://developer.noosh24.com"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/noosh24/sdks/main/.github/assets/noosh-lockup-on-dark.png"><img src="https://raw.githubusercontent.com/noosh24/sdks/main/.github/assets/noosh-lockup-on-light.png" alt="Noosh24" width="260"></picture></a>
+<a href="https://developer.noosh24.com"><img src="https://raw.githubusercontent.com/noosh24/sdks/main/.github/assets/noosh-lockup.svg" alt="Noosh24" width="260"></a>
 
 # Noosh24 Open API for Go
 

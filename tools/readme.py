@@ -112,10 +112,7 @@ def callout(lang):
 
 
 def logo(width):
-    return (
-        '<a href="%s"><picture><source media="(prefers-color-scheme: dark)" srcset="%s/.github/assets/noosh-lockup-on-dark.png">'
-        '<img src="%s/.github/assets/noosh-lockup-on-light.png" alt="Noosh24" width="%d"></picture></a>' % (SITE, RAW, RAW, width)
-    )
+    return '<a href="%s"><img src="%s/.github/assets/noosh-lockup.svg" alt="Noosh24" width="%d"></a>' % (SITE, RAW, width)
 
 
 def header(lang):
