@@ -89,9 +89,19 @@ jobs:
         run: |
           if npm view "@noosh24/open-api@${{ needs.meta.outputs.version }}" version > /dev/null 2>&1; then
             echo "@noosh24/open-api@${{ needs.meta.outputs.version }} is already on npm"
-          else
-            npm publish --provenance --access public $([[ "$TAG" == *-* ]] && echo --tag next)
+            exit 0
           fi
+          npm install -g npm@latest > /dev/null
+          if ! out=$(npm stage publish --provenance --access public $([[ "$TAG" == *-* ]] && echo --tag next) 2>&1); then
+            echo "$out"
+            if echo "$out" | grep -qi -E "already (staged|exists)|cannot publish over"; then
+              echo "::warning::@noosh24/open-api@${{ needs.meta.outputs.version }} is already staged"
+              exit 0
+            fi
+            exit 1
+          fi
+          echo "$out"
+          echo "::notice::@noosh24/open-api@${{ needs.meta.outputs.version }} is staged on npm. Approve it at npmjs.com or with: npm stage approve <stage-id>"
 
   python:
     needs: meta

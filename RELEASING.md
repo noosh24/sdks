@@ -47,7 +47,7 @@ Every trusted-publisher form asks for the same values:
 
 | SDK | Registry | One-time setup | Variable |
 | --- | --- | --- | --- |
-| Node.js | npm | Create the `noosh24` organisation on npmjs.com. Publish 0.1.0 once by hand (`npm publish --access public` from `node/`) so the package exists, then add a trusted publisher in the package settings. | `PUBLISH_NPM=true` |
+| Node.js | npm | Create the `noosh24` organisation on npmjs.com. Publish 0.1.0 once by hand (`npm publish --access public` from `node/`) so the package exists, then add a trusted publisher in the package settings with the "npm stage publish" permission. CI only stages a version; it goes live when a maintainer approves it with 2FA on npmjs.com or with `npm stage list` and `npm stage approve <stage-id>`. | `PUBLISH_NPM=true` |
 | Python | PyPI | Add a "pending publisher" for project `noosh24` at pypi.org/manage/account/publishing. | `PUBLISH_PYPI=true` |
 | C# / .NET | NuGet | Reserve the `Noosh24` prefix, add a trusted publishing policy at nuget.org (Account → Trusted publishing). | `PUBLISH_NUGET=true`, `NUGET_USER=<nuget.org user>` |
 | Ruby | RubyGems | Add a pending trusted publisher for gem `noosh24` at rubygems.org/profile/oidc/pending_trusted_publishers. MFA must be on. The page shows the account's numeric owner id, which the first push must assert. | `PUBLISH_RUBYGEMS=true`, `RUBYGEMS_OWNER=<owner id>` |
