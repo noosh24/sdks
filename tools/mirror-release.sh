@@ -31,3 +31,9 @@ if gh release view "$version_tag" --repo "$mirror" > /dev/null 2>&1; then
 else
   gh release create "$version_tag" --repo "$mirror" --verify-tag --title "$title" --notes-file "$notes" ${flags[@]+"${flags[@]}"}
 fi
+
+assets="$(mktemp -d)"
+gh release download "$tag" --repo "$source_repo" --dir "$assets" 2> /dev/null || true
+if [ -n "$(ls -A "$assets")" ]; then
+  gh release upload "$version_tag" --repo "$mirror" --clobber "$assets"/*
+fi
